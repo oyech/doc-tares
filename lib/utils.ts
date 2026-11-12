@@ -42,22 +42,58 @@ export function formatIndonesianDateShort(dateStr: string): string {
 }
 
 /**
- * Generate complete Berita Acara number from input number and date.
- * Format: {nomor_padded}/BAK-TAR/ENG/{bulan_romawi}/{tahun}
- * Example: "067" -> "067/BAK-TAR/ENG/X/2026"
+ * Extract department from full Berita Acara number if present.
+ * Example: "278/BAK-TAR/GS/X/2026" -> "GS"
  */
-export function generateBeritaAcaraNumber(nomorInput: string, dateStr: string): string {
-  if (!nomorInput) return '';
-  if (nomorInput.includes('/BAK-TAR/ENG/')) return nomorInput;
+export function extractDeptFromNomor(nomor: string): string {
+  if (!nomor) return 'ENG';
+  const parts = nomor.split('/');
+  if (parts.length >= 3 && parts[1] === 'BAK-TAR') {
+    return parts[2] ? parts[2].trim().toUpperCase() : 'ENG';
+  }
+  return 'ENG';
+}
 
+/**
+ * Extract raw number (prefix) from Berita Acara number.
+ * Example: "278/BAK-TAR/ENG/X/2026" -> "278"
+ */
+export function extractNomorUrut(nomor: string): string {
+  if (!nomor) return '';
+  return nomor.split('/')[0].trim();
+}
+
+/**
+ * Generate complete Berita Acara number from input number, date, and department.
+ * Format: {nomor_padded}/BAK-TAR/{dept}/{bulan_romawi}/{tahun}
+ * Example: "067", "2026-10-20", "GS" -> "067/BAK-TAR/GS/X/2026"
+ */
+export function generateBeritaAcaraNumber(
+  nomorInput: string,
+  dateStr: string,
+  dept: string = 'ENG'
+): string {
+  if (!nomorInput) return '';
+  const cleanDept = (dept || 'ENG').trim().toUpperCase();
+
+  // If already full format, replace the dept part
+  if (nomorInput.includes('/BAK-TAR/')) {
+    const parts = nomorInput.split('/');
+    if (parts.length >= 5) {
+      parts[2] = cleanDept;
+      return parts.join('/');
+    }
+  }
+
+  const prefix = nomorInput.split('/')[0].trim();
   const [yearStr, monthStr] = (dateStr || '').split('-');
   const year = parseInt(yearStr, 10) || new Date().getFullYear();
   const month = parseInt(monthStr, 10) || (new Date().getMonth() + 1);
 
-  const nomorPadded = nomorInput.trim().padStart(3, '0');
+  const nomorPadded = prefix.padStart(3, '0');
   const romanMonth = ROMAN_MONTHS[month] || String(month);
 
-  return `${nomorPadded}/BAK-TAR/ENG/${romanMonth}/${year}`;
+  return `${nomorPadded}/BAK-TAR/${cleanDept}/${romanMonth}/${year}`;
 }
 
 /**

@@ -1,5 +1,6 @@
 export interface BeritaAcaraData {
   nomor: string;
+  dept?: string;
   tanggal: string; // YYYY-MM-DD
   waktu: string;   // HH:mm
   lokasi: string;

@@ -7,7 +7,7 @@ import {
   formatIndonesianDayPhrase,
   calculateBQTotals,
 } from '../lib/utils';
-import { DEFAULT_BERITA_ACARA, DEFAULT_BQ } from '../lib/constants';
+import { DEFAULT_BQ } from '../lib/constants';
 
 test('Berita Acara Filename matches Python test cases', () => {
   // Case 1: user example 278 Tagihan Listrik Melonjak STC-18O.pdf
@@ -62,12 +62,28 @@ test('Berita Acara Filename matches Python test cases', () => {
   assert.equal(case3, '236 Battery bekas penggantian UPS tower A-B Ruang Kontrol NOC.pdf');
 });
 
-test('Berita Acara Number generation with Roman month', () => {
+test('Berita Acara Number generation with Roman month and Dept', () => {
+  // Default dept is ENG
   assert.equal(generateBeritaAcaraNumber('67', '2026-08-15'), '067/BAK-TAR/ENG/VIII/2026');
   assert.equal(generateBeritaAcaraNumber('278', '2026-10-20'), '278/BAK-TAR/ENG/X/2026');
-  // If already formatted, returns as-is
+
+  // Custom departments: GS, HRGA, CH, custom
+  assert.equal(generateBeritaAcaraNumber('278', '2026-10-20', 'GS'), '278/BAK-TAR/GS/X/2026');
+  assert.equal(generateBeritaAcaraNumber('278', '2026-10-20', 'HRGA'), '278/BAK-TAR/HRGA/X/2026');
+  assert.equal(generateBeritaAcaraNumber('278', '2026-10-20', 'CH'), '278/BAK-TAR/CH/X/2026');
+  assert.equal(generateBeritaAcaraNumber('278', '2026-10-20', 'SECURITY'), '278/BAK-TAR/SECURITY/X/2026');
+
+  // Updating existing full number with new Dept
   assert.equal(
-    generateBeritaAcaraNumber('067/BAK-TAR/ENG/VIII/2026', '2026-08-15'),
+    generateBeritaAcaraNumber('278/BAK-TAR/ENG/X/2026', '2026-10-20', 'GS'),
+    '278/BAK-TAR/GS/X/2026'
+  );
+  assert.equal(
+    generateBeritaAcaraNumber('278/BAK-TAR/ENG/X/2026', '2026-10-20', 'HRGA'),
+    '278/BAK-TAR/HRGA/X/2026'
+  );
+  assert.equal(
+    generateBeritaAcaraNumber('067/BAK-TAR/ENG/VIII/2026', '2026-08-15', 'ENG'),
     '067/BAK-TAR/ENG/VIII/2026'
   );
 });

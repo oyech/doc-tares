@@ -1,9 +1,14 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { BeritaAcaraData } from '@/lib/types';
-import { generateBeritaAcaraNumber } from '@/lib/utils';
-import { Sparkles, RotateCcw, ImagePlus, X } from 'lucide-react';
+import {
+  generateBeritaAcaraNumber,
+  extractDeptFromNomor,
+  extractNomorUrut,
+} from '@/lib/utils';
+import { DEFAULT_DEPARTMENTS, DEPARTMENT_LABELS } from '@/lib/constants';
+import { Sparkles, RotateCcw, ImagePlus, X, Plus, Check } from 'lucide-react';
 
 interface BeritaAcaraFormProps {
   data: BeritaAcaraData;
@@ -20,6 +25,30 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Departments list state with lazy initialization from localStorage
+  const [departments, setDepartments] = useState<string[]>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('reporteng_depts');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            return Array.from(new Set([...DEFAULT_DEPARTMENTS, ...parsed]));
+          }
+        }
+      } catch {}
+    }
+    return DEFAULT_DEPARTMENTS;
+  });
+
+  const [isAddingDept, setIsAddingDept] = useState(false);
+  const [newDeptInput, setNewDeptInput] = useState('');
+  const [isManualNomor, setIsManualNomor] = useState(false);
+
+  // Current active department
+  const currentDept = data.dept || extractDeptFromNomor(data.nomor) || 'ENG';
+  const currentNomorUrut = extractNomorUrut(data.nomor) || '001';
+
   const handleChange = (field: keyof BeritaAcaraData, value: string) => {
     onChange({
       ...data,
@@ -27,10 +56,72 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
     });
   };
 
-  const handleAutoFormatNomor = () => {
-    if (!data.nomor) return;
-    const formatted = generateBeritaAcaraNumber(data.nomor, data.tanggal);
-    handleChange('nomor', formatted);
+  // When Department selection changes
+  const handleDeptSelect = (deptValue: string) => {
+    if (deptValue === '__ADD_NEW__') {
+      setIsAddingDept(true);
+      return;
+    }
+
+    const updatedNomor = generateBeritaAcaraNumber(data.nomor || '001', data.tanggal, deptValue);
+    onChange({
+      ...data,
+      dept: deptValue,
+      nomor: updatedNomor,
+    });
+  };
+
+  // Add a new department
+  const handleAddNewDept = (e: React.FormEvent) => {
+    e.preventDefault();
+    const cleanDept = newDeptInput.trim().toUpperCase().replace(/[^A-Z0-9_-]/g, '');
+    if (!cleanDept) return;
+
+    if (!departments.includes(cleanDept)) {
+      const updatedList = [...departments, cleanDept];
+      setDepartments(updatedList);
+      try {
+        localStorage.setItem('reporteng_depts', JSON.stringify(updatedList));
+      } catch {}
+    }
+
+    // Immediately select the newly added department and update nomor
+    const updatedNomor = generateBeritaAcaraNumber(data.nomor || '001', data.tanggal, cleanDept);
+    onChange({
+      ...data,
+      dept: cleanDept,
+      nomor: updatedNomor,
+    });
+
+    setNewDeptInput('');
+    setIsAddingDept(false);
+  };
+
+  // When Nomor Urut changes
+  const handleNomorUrutChange = (rawVal: string) => {
+    if (isManualNomor) {
+      handleChange('nomor', rawVal);
+    } else {
+      const formatted = generateBeritaAcaraNumber(rawVal, data.tanggal, currentDept);
+      onChange({
+        ...data,
+        nomor: formatted,
+        dept: currentDept,
+      });
+    }
+  };
+
+  // When Tanggal changes, update roman month and year in nomor if using standard format
+  const handleTanggalChange = (val: string) => {
+    const updatedNomor = data.nomor.includes('/BAK-TAR/')
+      ? generateBeritaAcaraNumber(data.nomor, val, currentDept)
+      : data.nomor;
+
+    onChange({
+      ...data,
+      tanggal: val,
+      nomor: updatedNomor,
+    });
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,38 +191,138 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
         </div>
       </div>
 
-      {/* 1. Informasi Dasar */}
+      {/* 1. Informasi Dasar & Nomor Dokumen */}
       <section className="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 shadow-xs space-y-4">
         <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2 border-b border-gray-100 pb-2">
           <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
           Informasi Dasar
         </h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Nomor BA */}
-          <div className="sm:col-span-2">
-            <div className="flex items-center justify-between mb-1.5">
-              <label htmlFor="nomor" className="text-xs font-bold text-gray-800">
-                Nomor Berita Acara <span className="text-red-500">*</span>
-              </label>
-              <button
-                type="button"
-                onClick={handleAutoFormatNomor}
-                className="text-[11px] font-semibold text-emerald-700 hover:text-emerald-800 hover:underline"
-              >
-                Auto Format ({'067'} &rarr; {'067/BAK-TAR/ENG/X/2026'})
-              </button>
-            </div>
-            <input
-              id="nomor"
-              type="text"
-              value={data.nomor}
-              onChange={(e) => handleChange('nomor', e.target.value)}
-              placeholder="Contoh: 278 atau 278/BAK-TAR/ENG/X/2026"
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono"
-            />
+        {/* Nomor & Dept Controls */}
+        <div className="p-3.5 bg-emerald-50/50 border border-emerald-100 rounded-xl space-y-3">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <span className="text-xs font-bold text-emerald-950 flex items-center gap-1.5">
+              <span>Konfigurasi Nomor Berita Acara</span>
+            </span>
+            <button
+              type="button"
+              onClick={() => setIsManualNomor(!isManualNomor)}
+              className="text-[11px] font-medium text-emerald-700 hover:text-emerald-900 hover:underline"
+            >
+              {isManualNomor ? '← Gunakan Mode Otomatis' : 'Mode Edit String Manual'}
+            </button>
           </div>
 
+          {!isManualNomor ? (
+            <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
+              {/* Nomor Urut */}
+              <div className="sm:col-span-5">
+                <label
+                  htmlFor="nomorUrutInput"
+                  className="block text-xs font-bold text-gray-800 mb-1"
+                >
+                  Nomor Urut <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="nomorUrutInput"
+                  type="text"
+                  value={currentNomorUrut}
+                  onChange={(e) => handleNomorUrutChange(e.target.value)}
+                  placeholder="Contoh: 278 atau 067"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono font-bold"
+                />
+              </div>
+
+              {/* Pilihan Dept */}
+              <div className="sm:col-span-7">
+                <div className="flex items-center justify-between mb-1">
+                  <label htmlFor="deptSelect" className="text-xs font-bold text-gray-800">
+                    Dept (Departemen) <span className="text-red-500">*</span>
+                  </label>
+                  {!isAddingDept && (
+                    <button
+                      type="button"
+                      onClick={() => setIsAddingDept(true)}
+                      className="text-[11px] font-semibold text-emerald-700 hover:text-emerald-800 flex items-center gap-0.5"
+                    >
+                      <Plus className="w-3 h-3" />
+                      Tambah Dept
+                    </button>
+                  )}
+                </div>
+
+                {!isAddingDept ? (
+                  <select
+                    id="deptSelect"
+                    value={currentDept}
+                    onChange={(e) => handleDeptSelect(e.target.value)}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-semibold text-emerald-950"
+                  >
+                    {departments.map((dept) => (
+                      <option key={dept} value={dept}>
+                        {DEPARTMENT_LABELS[dept] || `${dept} — Departemen ${dept}`}
+                      </option>
+                    ))}
+                    <option value="__ADD_NEW__">+ Tambah Departemen Baru...</option>
+                  </select>
+                ) : (
+                  <form onSubmit={handleAddNewDept} className="flex items-center gap-1.5">
+                    <input
+                      type="text"
+                      autoFocus
+                      value={newDeptInput}
+                      onChange={(e) => setNewDeptInput(e.target.value)}
+                      placeholder="Kode Dept (misal: SEC/TR)"
+                      className="flex-1 px-2.5 py-1.5 text-xs border border-emerald-400 rounded-lg bg-white uppercase font-bold focus:ring-2 focus:ring-emerald-500"
+                    />
+                    <button
+                      type="submit"
+                      className="px-2.5 py-1.5 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 text-xs font-semibold flex items-center gap-1"
+                    >
+                      <Check className="w-3 h-3" />
+                      Simpan
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsAddingDept(false);
+                        setNewDeptInput('');
+                      }}
+                      className="px-2 py-1.5 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 text-xs font-medium"
+                    >
+                      Batal
+                    </button>
+                  </form>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div>
+              <label htmlFor="nomorManual" className="block text-xs font-bold text-gray-800 mb-1">
+                Ketik Nomor Lengkap Berita Acara Secara Bebas
+              </label>
+              <input
+                id="nomorManual"
+                type="text"
+                value={data.nomor}
+                onChange={(e) => handleChange('nomor', e.target.value)}
+                placeholder="Contoh: 278/BAK-TAR/ENG/X/2026"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono"
+              />
+            </div>
+          )}
+
+          {/* Real-time Number Preview Banner */}
+          <div className="pt-2 border-t border-emerald-100 flex items-center justify-between text-xs">
+            <span className="text-gray-700 font-medium">Hasil Nomor di Dokumen:</span>
+            <span className="font-mono font-bold text-emerald-950 bg-white px-2 py-1 rounded border border-emerald-200">
+              No.&nbsp;{data.nomor || '___/BAK-TAR/___/___/____'}
+            </span>
+          </div>
+        </div>
+
+        {/* Tanggal, Waktu, Lokasi */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Tanggal */}
           <div>
             <label htmlFor="tanggal" className="block text-xs font-bold text-gray-800 mb-1.5">
@@ -141,7 +332,7 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
               id="tanggal"
               type="date"
               value={data.tanggal}
-              onChange={(e) => handleChange('tanggal', e.target.value)}
+              onChange={(e) => handleTanggalChange(e.target.value)}
               className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
             />
           </div>
@@ -306,14 +497,14 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
               htmlFor="staffEngineering"
               className="block text-xs font-bold text-gray-800 mb-1.5"
             >
-              Staff Engineering (Dilaporkan oleh) <span className="text-red-500">*</span>
+              Staff {currentDept} (Dilaporkan oleh) <span className="text-red-500">*</span>
             </label>
             <input
               id="staffEngineering"
               type="text"
               value={data.staffEngineering}
               onChange={(e) => handleChange('staffEngineering', e.target.value)}
-              placeholder="Nama Staff Engineering"
+              placeholder="Nama Pelapor"
               className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
             />
           </div>
@@ -327,14 +518,14 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
               type="text"
               value={data.supervisor}
               onChange={(e) => handleChange('supervisor', e.target.value)}
-              placeholder="Nama Supervisor Engineering"
+              placeholder="Nama Supervisor"
               className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
             />
           </div>
 
           <div>
             <label htmlFor="asstManager" className="block text-xs font-bold text-gray-800 mb-1.5">
-              Engineering Asst. Manager (Diketahui oleh) <span className="text-red-500">*</span>
+              Asst. Manager (Diketahui oleh) <span className="text-red-500">*</span>
             </label>
             <input
               id="asstManager"

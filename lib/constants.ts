@@ -40,8 +40,18 @@ export const ROMAN_MONTHS: Record<number, string> = {
   12: 'XII',
 };
 
+export const DEFAULT_DEPARTMENTS = ['ENG', 'GS', 'HRGA', 'CH'];
+
+export const DEPARTMENT_LABELS: Record<string, string> = {
+  ENG: 'ENG — Engineering',
+  GS: 'GS — General Service',
+  HRGA: 'HRGA — Human Resources & GA',
+  CH: 'CH — Club House',
+};
+
 export const DEFAULT_BERITA_ACARA: BeritaAcaraData = {
   nomor: '278/BAK-TAR/ENG/X/2026',
+  dept: 'ENG',
   tanggal: '2026-10-20',
   waktu: '10:00',
   lokasi: 'STC-18O',
