@@ -176,8 +176,8 @@ export const BeritaAcaraDoc: React.FC<BeritaAcaraDocProps> = ({ data }) => {
             </tr>
           </thead>
           <tbody>
-            {/* Paraf Row */}
-            <tr className="border-b border-black h-[54px] align-top">
+            {/* Paraf Row (perlebar row kolom tanda tangan) */}
+            <tr className="border-b border-black h-[85px] align-top">
               <td className="border-r border-black p-1 text-[8.5px] text-gray-500">
                 Paraf:
               </td>
@@ -206,12 +206,20 @@ export const BeritaAcaraDoc: React.FC<BeritaAcaraDocProps> = ({ data }) => {
                 Nama: <span className="font-bold">{data.propertyManager || '....................'}</span>
               </td>
             </tr>
-            {/* Role Row */}
-            <tr className="border-b border-black text-gray-800">
-              <td className="border-r border-black p-1.5">Engineering Staff</td>
-              <td className="border-r border-black p-1.5">Supervisor</td>
-              <td className="border-r border-black p-1.5">Engineering Asst. Manager</td>
-              <td className="p-1.5">Property Manager</td>
+            {/* Role / Jabatan Row */}
+            <tr className="border-b border-black text-gray-800 font-medium">
+              <td className="border-r border-black p-1.5 leading-tight">
+                {data.jabatanStaff || 'Engineering Staff'}
+              </td>
+              <td className="border-r border-black p-1.5 leading-tight">
+                {data.jabatanSupervisor || 'Supervisor'}
+              </td>
+              <td className="border-r border-black p-1.5 leading-tight">
+                {data.jabatanAsstManager || 'Engineering Asst. Manager'}
+              </td>
+              <td className="p-1.5 leading-tight">
+                {data.jabatanPropertyManager || 'Property Manager'}
+              </td>
             </tr>
             {/* Date Row */}
             <tr>

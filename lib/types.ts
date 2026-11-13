@@ -8,9 +8,13 @@ export interface BeritaAcaraData {
   analisa: string;
   solusi: string;
   staffEngineering: string;
+  jabatanStaff?: string;
   supervisor: string;
+  jabatanSupervisor?: string;
   asstManager: string;
+  jabatanAsstManager?: string;
   propertyManager: string;
+  jabatanPropertyManager?: string;
   photos: string[]; // base64 or object URLs
 }
 
@@ -30,8 +34,11 @@ export interface BQData {
   kontraktor: string;
   location: string;
   dibuatOleh: string;
+  jabatanDibuatOleh?: string;
   menyetujui: string;
+  jabatanMenyetujui?: string;
   mengetahui: string;
+  jabatanMengetahui?: string;
   items: BQItem[];
 }
 

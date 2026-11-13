@@ -59,9 +59,13 @@ export const DEFAULT_BERITA_ACARA: BeritaAcaraData = {
   analisa: 'Berdasarkan pengecekan lapangan dan pengukuran arus beban panel daya pada unit STC-18O, ditemukan adanya pemakaian daya yang tidak wajar akibat malfungsi unit pendingin udara (AC) yang bekerja terus menerus tanpa cut-off otomatis temperatur termostat.',
   solusi: 'Telah dilakukan perbaikan dan penggantian thermostat unit pendingin udara, pembersihan coil condenser serta kalibrasi sensor otomatis. Unit saat ini kembali beroperasi normal dengan konsumsi arus listrik sesuai spesifikasi standar.',
   staffEngineering: 'Solehudin',
+  jabatanStaff: 'Engineering Staff',
   supervisor: 'Agus Setiawan',
+  jabatanSupervisor: 'Supervisor',
   asstManager: 'Bambang Kusuma',
+  jabatanAsstManager: 'Engineering Asst. Manager',
   propertyManager: 'Dian Nugroho',
+  jabatanPropertyManager: 'Property Manager',
   photos: [],
 };
 
@@ -71,8 +75,11 @@ export const DEFAULT_BQ: BQData = {
   kontraktor: 'PT. MANDIRI TEKNIK PRIMA',
   location: 'Ruang Pompa Gedung Utama Taman Anggrek Residences',
   dibuatOleh: 'Bambang Kusuma',
+  jabatanDibuatOleh: 'Engineering Ast. Manager',
   menyetujui: 'Dian Nugroho',
+  jabatanMenyetujui: 'Property Manager',
   mengetahui: 'Hendra Wijaya',
+  jabatanMengetahui: 'GM Building Management',
   items: [
     {
       id: 'item-1',

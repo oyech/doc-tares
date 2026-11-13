@@ -492,66 +492,142 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label
-              htmlFor="staffEngineering"
-              className="block text-xs font-bold text-gray-800 mb-1.5"
-            >
-              Staff {currentDept} (Dilaporkan oleh) <span className="text-red-500">*</span>
-            </label>
-            <input
-              id="staffEngineering"
-              type="text"
-              value={data.staffEngineering}
-              onChange={(e) => handleChange('staffEngineering', e.target.value)}
-              placeholder="Nama Pelapor"
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
-            />
+          {/* 1. Pelapor */}
+          <div className="space-y-2 p-3 bg-gray-50/70 border border-gray-200 rounded-lg">
+            <div>
+              <label
+                htmlFor="staffEngineering"
+                className="block text-xs font-bold text-gray-800 mb-1"
+              >
+                Dilaporkan oleh (Nama) <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="staffEngineering"
+                type="text"
+                value={data.staffEngineering}
+                onChange={(e) => handleChange('staffEngineering', e.target.value)}
+                placeholder="Nama Pelapor"
+                className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-medium"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="jabatanStaff"
+                className="block text-[11px] font-semibold text-gray-700 mb-1"
+              >
+                Jabatan di Bawah Nama
+              </label>
+              <input
+                id="jabatanStaff"
+                type="text"
+                value={data.jabatanStaff ?? `Staff ${currentDept}`}
+                onChange={(e) => handleChange('jabatanStaff', e.target.value)}
+                placeholder="Contoh: Engineering Staff"
+                className="w-full px-3 py-1.5 text-xs border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all text-gray-700"
+              />
+            </div>
           </div>
 
-          <div>
-            <label htmlFor="supervisor" className="block text-xs font-bold text-gray-800 mb-1.5">
-              Supervisor (Diperiksa oleh) <span className="text-red-500">*</span>
-            </label>
-            <input
-              id="supervisor"
-              type="text"
-              value={data.supervisor}
-              onChange={(e) => handleChange('supervisor', e.target.value)}
-              placeholder="Nama Supervisor"
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
-            />
+          {/* 2. Diperiksa oleh */}
+          <div className="space-y-2 p-3 bg-gray-50/70 border border-gray-200 rounded-lg">
+            <div>
+              <label htmlFor="supervisor" className="block text-xs font-bold text-gray-800 mb-1">
+                Diperiksa oleh (Nama) <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="supervisor"
+                type="text"
+                value={data.supervisor}
+                onChange={(e) => handleChange('supervisor', e.target.value)}
+                placeholder="Nama Supervisor"
+                className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-medium"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="jabatanSupervisor"
+                className="block text-[11px] font-semibold text-gray-700 mb-1"
+              >
+                Jabatan di Bawah Nama
+              </label>
+              <input
+                id="jabatanSupervisor"
+                type="text"
+                value={data.jabatanSupervisor ?? 'Supervisor'}
+                onChange={(e) => handleChange('jabatanSupervisor', e.target.value)}
+                placeholder="Contoh: Supervisor"
+                className="w-full px-3 py-1.5 text-xs border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all text-gray-700"
+              />
+            </div>
           </div>
 
-          <div>
-            <label htmlFor="asstManager" className="block text-xs font-bold text-gray-800 mb-1.5">
-              Asst. Manager (Diketahui oleh) <span className="text-red-500">*</span>
-            </label>
-            <input
-              id="asstManager"
-              type="text"
-              value={data.asstManager}
-              onChange={(e) => handleChange('asstManager', e.target.value)}
-              placeholder="Nama Asst. Manager"
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
-            />
+          {/* 3. Diketahui oleh: Asst Manager */}
+          <div className="space-y-2 p-3 bg-gray-50/70 border border-gray-200 rounded-lg">
+            <div>
+              <label htmlFor="asstManager" className="block text-xs font-bold text-gray-800 mb-1">
+                Diketahui oleh 1 (Nama) <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="asstManager"
+                type="text"
+                value={data.asstManager}
+                onChange={(e) => handleChange('asstManager', e.target.value)}
+                placeholder="Nama Asst. Manager"
+                className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-medium"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="jabatanAsstManager"
+                className="block text-[11px] font-semibold text-gray-700 mb-1"
+              >
+                Jabatan di Bawah Nama
+              </label>
+              <input
+                id="jabatanAsstManager"
+                type="text"
+                value={data.jabatanAsstManager ?? 'Engineering Asst. Manager'}
+                onChange={(e) => handleChange('jabatanAsstManager', e.target.value)}
+                placeholder="Contoh: Engineering Asst. Manager"
+                className="w-full px-3 py-1.5 text-xs border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all text-gray-700"
+              />
+            </div>
           </div>
 
-          <div>
-            <label
-              htmlFor="propertyManager"
-              className="block text-xs font-bold text-gray-800 mb-1.5"
-            >
-              Property Manager (Diketahui oleh) <span className="text-red-500">*</span>
-            </label>
-            <input
-              id="propertyManager"
-              type="text"
-              value={data.propertyManager}
-              onChange={(e) => handleChange('propertyManager', e.target.value)}
-              placeholder="Nama Property Manager"
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
-            />
+          {/* 4. Diketahui oleh: Property Manager */}
+          <div className="space-y-2 p-3 bg-gray-50/70 border border-gray-200 rounded-lg">
+            <div>
+              <label
+                htmlFor="propertyManager"
+                className="block text-xs font-bold text-gray-800 mb-1"
+              >
+                Diketahui oleh 2 (Nama) <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="propertyManager"
+                type="text"
+                value={data.propertyManager}
+                onChange={(e) => handleChange('propertyManager', e.target.value)}
+                placeholder="Nama Property Manager"
+                className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-medium"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="jabatanPropertyManager"
+                className="block text-[11px] font-semibold text-gray-700 mb-1"
+              >
+                Jabatan di Bawah Nama
+              </label>
+              <input
+                id="jabatanPropertyManager"
+                type="text"
+                value={data.jabatanPropertyManager ?? 'Property Manager'}
+                onChange={(e) => handleChange('jabatanPropertyManager', e.target.value)}
+                placeholder="Contoh: Property Manager"
+                className="w-full px-3 py-1.5 text-xs border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all text-gray-700"
+              />
+            </div>
           </div>
         </div>
       </section>

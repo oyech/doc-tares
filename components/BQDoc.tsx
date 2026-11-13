@@ -71,35 +71,35 @@ const BQSinglePage: React.FC<BQPageProps> = ({ data, isIce, pageNumber }) => {
       {/* 3. Items Table */}
       <div className="mb-3 overflow-x-auto">
         <table className="w-full border-collapse border border-black text-[8.5px]">
-          {/* Table Header */}
+          {/* Table Header - Uniform & Balanced */}
           <thead>
             <tr className="bg-[#00B050] text-white font-bold text-center border-b border-black">
-              <th rowSpan={2} className="border-r border-black p-1.5 w-[28px]">
+              <th rowSpan={2} className="border-r border-black p-1.5 w-[30px] align-middle">
                 NO
               </th>
-              <th rowSpan={2} className="border-r border-black p-1.5 text-left min-w-[170px]">
+              <th rowSpan={2} className="border-r border-black p-1.5 text-left min-w-[170px] align-middle">
                 ITEM
               </th>
-              <th colSpan={2} className="border-r border-black p-1.5 w-[65px]">
+              <th rowSpan={2} className="border-r border-black p-1.5 w-[38px] align-middle">
                 QTY
               </th>
-              <th colSpan={2} className="border-r border-black p-1.5">
+              <th rowSpan={2} className="border-r border-black p-1.5 w-[38px] align-middle">
+                UNIT
+              </th>
+              <th colSpan={2} className="border-r border-black p-1.5 align-middle">
                 UNIT PRICE
               </th>
-              <th colSpan={2} className="p-1.5">
+              <th colSpan={2} className="p-1.5 align-middle">
                 TOTAL PRICE
               </th>
             </tr>
             <tr className="bg-[#00B050] text-white font-bold text-center border-b border-black">
-              {/* Under QTY */}
-              <th className="hidden"></th>
-              <th className="hidden"></th>
               {/* Under UNIT PRICE */}
-              <th className="border-r border-black p-1 w-[70px]">MATERIAL</th>
-              <th className="border-r border-black p-1 w-[70px]">LABOR</th>
+              <th className="border-r border-black p-1 w-[70px] align-middle">MATERIAL</th>
+              <th className="border-r border-black p-1 w-[70px] align-middle">LABOR</th>
               {/* Under TOTAL PRICE */}
-              <th className="border-r border-black p-1 w-[75px]">MATERIAL</th>
-              <th className="p-1 w-[75px]">LABOR</th>
+              <th className="border-r border-black p-1 w-[75px] align-middle">MATERIAL</th>
+              <th className="p-1 w-[75px] align-middle">LABOR</th>
             </tr>
           </thead>
 
@@ -233,43 +233,49 @@ const BQSinglePage: React.FC<BQPageProps> = ({ data, isIce, pageNumber }) => {
         </table>
       </div>
 
-      {/* 5. Signatures Table (3 columns, centered) */}
-      <div className="mt-4 mx-auto max-w-[420px]">
-        <table className="w-full border-collapse border border-black text-center text-[9px]">
+      {/* 5. Signatures Table (3 columns, borderless, columns widened by >20%, taller signature row) */}
+      <div className="mt-5 mx-auto max-w-[530px] w-full">
+        <table className="w-full border-none text-center text-[9px]">
           <thead>
-            <tr className="border-b border-black font-semibold bg-gray-50/50">
-              <th className="border-r border-black p-1 w-1/3">Dibuat Oleh</th>
-              <th className="border-r border-black p-1 w-1/3">Menyetujui,</th>
-              <th className="p-1 w-1/3">Mengetahui,</th>
+            <tr className="border-none font-bold text-gray-900">
+              <th className="p-2 w-1/3 text-center border-none font-bold text-[9.5px]">Dibuat Oleh</th>
+              <th className="p-2 w-1/3 text-center border-none font-bold text-[9.5px]">Menyetujui,</th>
+              <th className="p-2 w-1/3 text-center border-none font-bold text-[9.5px]">Mengetahui,</th>
             </tr>
           </thead>
           <tbody>
-            {/* Paraf & Names */}
-            <tr className="border-b border-black h-[68px] align-bottom">
-              <td className="border-r border-black p-1 pb-1">
-                <div className="font-bold text-[9.5px] leading-tight">
-                  {data.dibuatOleh || '....................'}
+            {/* Paraf & Names (taller row for signature space) */}
+            <tr className="border-none h-[90px] align-bottom">
+              <td className="p-2 pb-1 border-none text-center">
+                <div className="font-bold text-[10px] leading-tight text-black underline underline-offset-2">
+                  {data.dibuatOleh || '................................'}
                 </div>
-                <div className="text-[8px] text-gray-700">Engineering Ast. Manager</div>
+                <div className="text-[8.5px] text-gray-800 mt-1 font-medium">
+                  {data.jabatanDibuatOleh || 'Engineering Ast. Manager'}
+                </div>
               </td>
-              <td className="border-r border-black p-1 pb-1">
-                <div className="font-bold text-[9.5px] leading-tight">
-                  {data.menyetujui || '....................'}
+              <td className="p-2 pb-1 border-none text-center">
+                <div className="font-bold text-[10px] leading-tight text-black underline underline-offset-2">
+                  {data.menyetujui || '................................'}
                 </div>
-                <div className="text-[8px] text-gray-700">Property Manager</div>
+                <div className="text-[8.5px] text-gray-800 mt-1 font-medium">
+                  {data.jabatanMenyetujui || 'Property Manager'}
+                </div>
               </td>
-              <td className="p-1 pb-1">
-                <div className="font-bold text-[9.5px] leading-tight">
-                  {data.mengetahui || '....................'}
+              <td className="p-2 pb-1 border-none text-center">
+                <div className="font-bold text-[10px] leading-tight text-black underline underline-offset-2">
+                  {data.mengetahui || '................................'}
                 </div>
-                <div className="text-[8px] text-gray-700">GM Building Management</div>
+                <div className="text-[8.5px] text-gray-800 mt-1 font-medium">
+                  {data.jabatanMengetahui || 'GM Building Management'}
+                </div>
               </td>
             </tr>
-            {/* Date */}
-            <tr className="text-left text-[8px] text-gray-800">
-              <td className="border-r border-black p-1">Tanggal :</td>
-              <td className="border-r border-black p-1">Tanggal :</td>
-              <td className="p-1">Tanggal :</td>
+            {/* Date Row (borderless) */}
+            <tr className="border-none text-center text-[8.5px] text-gray-700">
+              <td className="p-2 pt-1 border-none">Tanggal : ....................</td>
+              <td className="p-2 pt-1 border-none">Tanggal : ....................</td>
+              <td className="p-2 pt-1 border-none">Tanggal : ....................</td>
             </tr>
           </tbody>
         </table>

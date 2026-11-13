@@ -419,46 +419,94 @@ export const BQForm: React.FC<BQFormProps> = ({
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div>
-            <label htmlFor="dibuatOleh" className="block text-xs font-bold text-gray-800 mb-1.5">
-              Dibuat Oleh (Engineering Ast. Manager) <span className="text-red-500">*</span>
-            </label>
-            <input
-              id="dibuatOleh"
-              type="text"
-              value={data.dibuatOleh}
-              onChange={(e) => handleFieldChange('dibuatOleh', e.target.value)}
-              placeholder="Nama Engineering Ast. Manager"
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
-            />
+          {/* 1. Dibuat Oleh */}
+          <div className="space-y-2 p-3 bg-gray-50/70 border border-gray-200 rounded-lg">
+            <div>
+              <label htmlFor="dibuatOleh" className="block text-xs font-bold text-gray-800 mb-1">
+                Dibuat Oleh (Nama) <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="dibuatOleh"
+                type="text"
+                value={data.dibuatOleh}
+                onChange={(e) => handleFieldChange('dibuatOleh', e.target.value)}
+                placeholder="Nama Pembuat"
+                className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-medium"
+              />
+            </div>
+            <div>
+              <label htmlFor="jabatanDibuatOleh" className="block text-[11px] font-semibold text-gray-700 mb-1">
+                Jabatan di Bawah Nama
+              </label>
+              <input
+                id="jabatanDibuatOleh"
+                type="text"
+                value={data.jabatanDibuatOleh ?? 'Engineering Ast. Manager'}
+                onChange={(e) => handleFieldChange('jabatanDibuatOleh', e.target.value)}
+                placeholder="Contoh: Engineering Ast. Manager"
+                className="w-full px-3 py-1.5 text-xs border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all text-gray-700"
+              />
+            </div>
           </div>
 
-          <div>
-            <label htmlFor="menyetujui" className="block text-xs font-bold text-gray-800 mb-1.5">
-              Menyetujui (Property Manager) <span className="text-red-500">*</span>
-            </label>
-            <input
-              id="menyetujui"
-              type="text"
-              value={data.menyetujui}
-              onChange={(e) => handleFieldChange('menyetujui', e.target.value)}
-              placeholder="Nama Property Manager"
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
-            />
+          {/* 2. Menyetujui */}
+          <div className="space-y-2 p-3 bg-gray-50/70 border border-gray-200 rounded-lg">
+            <div>
+              <label htmlFor="menyetujui" className="block text-xs font-bold text-gray-800 mb-1">
+                Menyetujui (Nama) <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="menyetujui"
+                type="text"
+                value={data.menyetujui}
+                onChange={(e) => handleFieldChange('menyetujui', e.target.value)}
+                placeholder="Nama Penyetuju"
+                className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-medium"
+              />
+            </div>
+            <div>
+              <label htmlFor="jabatanMenyetujui" className="block text-[11px] font-semibold text-gray-700 mb-1">
+                Jabatan di Bawah Nama
+              </label>
+              <input
+                id="jabatanMenyetujui"
+                type="text"
+                value={data.jabatanMenyetujui ?? 'Property Manager'}
+                onChange={(e) => handleFieldChange('jabatanMenyetujui', e.target.value)}
+                placeholder="Contoh: Property Manager"
+                className="w-full px-3 py-1.5 text-xs border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all text-gray-700"
+              />
+            </div>
           </div>
 
-          <div>
-            <label htmlFor="mengetahui" className="block text-xs font-bold text-gray-800 mb-1.5">
-              Mengetahui (GM Building Management) <span className="text-red-500">*</span>
-            </label>
-            <input
-              id="mengetahui"
-              type="text"
-              value={data.mengetahui}
-              onChange={(e) => handleFieldChange('mengetahui', e.target.value)}
-              placeholder="Nama GM Building Management"
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
-            />
+          {/* 3. Mengetahui */}
+          <div className="space-y-2 p-3 bg-gray-50/70 border border-gray-200 rounded-lg">
+            <div>
+              <label htmlFor="mengetahui" className="block text-xs font-bold text-gray-800 mb-1">
+                Mengetahui (Nama) <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="mengetahui"
+                type="text"
+                value={data.mengetahui}
+                onChange={(e) => handleFieldChange('mengetahui', e.target.value)}
+                placeholder="Nama yang Mengetahui"
+                className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-medium"
+              />
+            </div>
+            <div>
+              <label htmlFor="jabatanMengetahui" className="block text-[11px] font-semibold text-gray-700 mb-1">
+                Jabatan di Bawah Nama
+              </label>
+              <input
+                id="jabatanMengetahui"
+                type="text"
+                value={data.jabatanMengetahui ?? 'GM Building Management'}
+                onChange={(e) => handleFieldChange('jabatanMengetahui', e.target.value)}
+                placeholder="Contoh: GM Building Management"
+                className="w-full px-3 py-1.5 text-xs border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all text-gray-700"
+              />
+            </div>
           </div>
         </div>
       </section>

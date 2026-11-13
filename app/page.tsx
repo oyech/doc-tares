@@ -67,7 +67,8 @@ export default function HomePage() {
     if (confirm('Apakah Anda yakin ingin mengosongkan formulir Berita Acara?')) {
       const today = new Date().toISOString().split('T')[0];
       const blankBA: BeritaAcaraData = {
-        nomor: generateBeritaAcaraNumber('001', today),
+        nomor: generateBeritaAcaraNumber('001', today, 'ENG'),
+        dept: 'ENG',
         tanggal: today,
         waktu: '10:00',
         lokasi: '',
@@ -75,9 +76,13 @@ export default function HomePage() {
         analisa: '',
         solusi: '',
         staffEngineering: '',
+        jabatanStaff: 'Engineering Staff',
         supervisor: '',
+        jabatanSupervisor: 'Supervisor',
         asstManager: '',
+        jabatanAsstManager: 'Engineering Asst. Manager',
         propertyManager: '',
+        jabatanPropertyManager: 'Property Manager',
         photos: [],
       };
       setBeritaData(blankBA);
@@ -97,8 +102,11 @@ export default function HomePage() {
         kontraktor: '',
         location: '',
         dibuatOleh: '',
+        jabatanDibuatOleh: 'Engineering Ast. Manager',
         menyetujui: '',
+        jabatanMenyetujui: 'Property Manager',
         mengetahui: '',
+        jabatanMengetahui: 'GM Building Management',
         items: [
           {
             id: `item-${Date.now()}`,
