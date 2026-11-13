@@ -3,13 +3,14 @@
 import React from 'react';
 import { BQData, BQItem, BQViewMode } from '@/lib/types';
 import { calculateBQTotals, formatNumberId } from '@/lib/utils';
-import { Sparkles, RotateCcw, Plus, Trash2, Eye } from 'lucide-react';
+import { Sparkles, RotateCcw, Plus, Trash2, Eye, Upload } from 'lucide-react';
 
 interface BQFormProps {
   data: BQData;
   onChange: (updated: BQData) => void;
   onReset: () => void;
   onLoadSample: () => void;
+  onUploadPdf?: () => void;
   viewMode: BQViewMode;
   onViewModeChange: (mode: BQViewMode) => void;
 }
@@ -19,6 +20,7 @@ export const BQForm: React.FC<BQFormProps> = ({
   onChange,
   onReset,
   onLoadSample,
+  onUploadPdf,
   viewMode,
   onViewModeChange,
 }) => {
@@ -89,6 +91,17 @@ export const BQForm: React.FC<BQFormProps> = ({
           </span>
         </div>
         <div className="flex items-center gap-2">
+          {onUploadPdf && (
+            <button
+              type="button"
+              onClick={onUploadPdf}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-emerald-900 bg-white hover:bg-emerald-50 rounded-lg transition-colors border border-emerald-300 shadow-2xs"
+              title="Upload file PDF BQ / ICE untuk diedit kembali"
+            >
+              <Upload className="w-3.5 h-3.5 text-emerald-700" />
+              <span>Edit dari PDF</span>
+            </button>
+          )}
           <button
             type="button"
             onClick={onLoadSample}

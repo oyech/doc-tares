@@ -13,6 +13,8 @@ import {
   Layers,
   ChevronDown,
   Check,
+  Upload,
+  Loader2,
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -23,6 +25,8 @@ interface NavbarProps {
   printScope: PrintScope;
   onPrintScopeChange: (scope: PrintScope) => void;
   onPrint: () => void;
+  onUploadPdfClick: () => void;
+  isLoadingPdf?: boolean;
   zoom: number;
   onZoomChange: (zoom: number) => void;
 }
@@ -35,6 +39,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   printScope,
   onPrintScopeChange,
   onPrint,
+  onUploadPdfClick,
+  isLoadingPdf = false,
   zoom,
   onZoomChange,
 }) => {
@@ -175,6 +181,23 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>Preview</span>
             </button>
           </div>
+
+          {/* Upload / Edit PDF Button */}
+          <button
+            type="button"
+            onClick={onUploadPdfClick}
+            disabled={isLoadingPdf}
+            className="inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-semibold text-emerald-900 bg-white hover:bg-emerald-50 active:scale-95 border border-emerald-300 rounded-lg shadow-2xs transition-all disabled:opacity-50"
+            title="Upload dokumen PDF yang sudah disimpan untuk diedit kembali"
+          >
+            {isLoadingPdf ? (
+              <Loader2 className="w-4 h-4 text-emerald-700 animate-spin" />
+            ) : (
+              <Upload className="w-4 h-4 text-emerald-700" />
+            )}
+            <span className="hidden sm:inline">Upload / Edit PDF</span>
+            <span className="sm:hidden">Upload</span>
+          </button>
 
           {/* Cetak / Download PDF Button Group */}
           <div ref={printMenuRef} className="relative inline-flex items-center rounded-lg shadow-xs">

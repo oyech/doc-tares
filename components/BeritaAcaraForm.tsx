@@ -8,13 +8,14 @@ import {
   extractNomorUrut,
 } from '@/lib/utils';
 import { DEFAULT_DEPARTMENTS, DEPARTMENT_LABELS } from '@/lib/constants';
-import { Sparkles, RotateCcw, ImagePlus, X, Plus, Check } from 'lucide-react';
+import { Sparkles, RotateCcw, ImagePlus, X, Plus, Check, Upload } from 'lucide-react';
 
 interface BeritaAcaraFormProps {
   data: BeritaAcaraData;
   onChange: (updated: BeritaAcaraData) => void;
   onReset: () => void;
   onLoadSample: () => void;
+  onUploadPdf?: () => void;
 }
 
 export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
@@ -22,6 +23,7 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
   onChange,
   onReset,
   onLoadSample,
+  onUploadPdf,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -171,6 +173,17 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
           </span>
         </div>
         <div className="flex items-center gap-2">
+          {onUploadPdf && (
+            <button
+              type="button"
+              onClick={onUploadPdf}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-emerald-900 bg-white hover:bg-emerald-50 rounded-lg transition-colors border border-emerald-300 shadow-2xs"
+              title="Upload file PDF Berita Acara untuk diedit kembali"
+            >
+              <Upload className="w-3.5 h-3.5 text-emerald-700" />
+              <span>Edit dari PDF</span>
+            </button>
+          )}
           <button
             type="button"
             onClick={onLoadSample}
