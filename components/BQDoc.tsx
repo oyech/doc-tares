@@ -233,52 +233,57 @@ const BQSinglePage: React.FC<BQPageProps> = ({ data, isIce, pageNumber }) => {
         </table>
       </div>
 
-      {/* 5. Signatures Table (3 columns, borderless, columns widened by >20%, taller signature row) */}
-      <div className="mt-5 mx-auto max-w-[530px] w-full">
-        <table className="w-full border-none text-center text-[9px]">
-          <thead>
-            <tr className="border-none font-bold text-gray-900">
-              <th className="p-2 w-1/3 text-center border-none font-bold text-[9.5px]">Dibuat Oleh</th>
-              <th className="p-2 w-1/3 text-center border-none font-bold text-[9.5px]">Menyetujui,</th>
-              <th className="p-2 w-1/3 text-center border-none font-bold text-[9.5px]">Mengetahui,</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* Paraf & Names (tinggi row tanda tangan pas 100px) */}
-            <tr className="border-none h-[100px] align-bottom">
-              <td className="p-2 pb-1 border-none text-center">
-                <div className="font-bold text-[10px] leading-tight text-black underline underline-offset-2">
-                  {data.dibuatOleh || '................................'}
-                </div>
-                <div className="text-[8.5px] text-gray-800 mt-1 font-medium">
-                  {data.jabatanDibuatOleh || 'Engineering Ast. Manager'}
-                </div>
-              </td>
-              <td className="p-2 pb-1 border-none text-center">
-                <div className="font-bold text-[10px] leading-tight text-black underline underline-offset-2">
-                  {data.menyetujui || '................................'}
-                </div>
-                <div className="text-[8.5px] text-gray-800 mt-1 font-medium">
-                  {data.jabatanMenyetujui || 'Property Manager'}
-                </div>
-              </td>
-              <td className="p-2 pb-1 border-none text-center">
-                <div className="font-bold text-[10px] leading-tight text-black underline underline-offset-2">
-                  {data.mengetahui || '................................'}
-                </div>
-                <div className="text-[8.5px] text-gray-800 mt-1 font-medium">
-                  {data.jabatanMengetahui || 'GM Building Management'}
-                </div>
-              </td>
-            </tr>
-            {/* Date Row (borderless) */}
-            <tr className="border-none text-center text-[8.5px] text-gray-700">
-              <td className="p-2 pt-1 border-none">Tanggal : ....................</td>
-              <td className="p-2 pt-1 border-none">Tanggal : ....................</td>
-              <td className="p-2 pt-1 border-none">Tanggal : ....................</td>
-            </tr>
-          </tbody>
-        </table>
+      {/* 5. Signatures Block (3 columns, borderless, wide spacing gap between columns, 100px signature height) */}
+      <div className="mt-6 mx-auto max-w-[640px] w-full">
+        <div className="grid grid-cols-3 gap-10 sm:gap-12 text-center text-[9px]">
+          {/* Col 1: Dibuat Oleh */}
+          <div className="flex flex-col items-center">
+            <div className="font-bold text-[9.5px] text-gray-900 pb-1">Dibuat Oleh</div>
+            <div className="h-[100px] flex items-end justify-center pb-1 w-full">
+              <div className="font-bold text-[10px] leading-tight text-black underline underline-offset-2">
+                {data.dibuatOleh || '................................'}
+              </div>
+            </div>
+            <div className="text-[8.5px] text-gray-800 font-medium mt-1">
+              {data.jabatanDibuatOleh || 'Engineering Ast. Manager'}
+            </div>
+            <div className="text-[8.5px] text-gray-700 mt-1">
+              Tanggal : ....................
+            </div>
+          </div>
+
+          {/* Col 2: Menyetujui */}
+          <div className="flex flex-col items-center">
+            <div className="font-bold text-[9.5px] text-gray-900 pb-1">Menyetujui,</div>
+            <div className="h-[100px] flex items-end justify-center pb-1 w-full">
+              <div className="font-bold text-[10px] leading-tight text-black underline underline-offset-2">
+                {data.menyetujui || '................................'}
+              </div>
+            </div>
+            <div className="text-[8.5px] text-gray-800 font-medium mt-1">
+              {data.jabatanMenyetujui || 'Property Manager'}
+            </div>
+            <div className="text-[8.5px] text-gray-700 mt-1">
+              Tanggal : ....................
+            </div>
+          </div>
+
+          {/* Col 3: Mengetahui */}
+          <div className="flex flex-col items-center">
+            <div className="font-bold text-[9.5px] text-gray-900 pb-1">Mengetahui,</div>
+            <div className="h-[100px] flex items-end justify-center pb-1 w-full">
+              <div className="font-bold text-[10px] leading-tight text-black underline underline-offset-2">
+                {data.mengetahui || '................................'}
+              </div>
+            </div>
+            <div className="text-[8.5px] text-gray-800 font-medium mt-1">
+              {data.jabatanMengetahui || 'GM Building Management'}
+            </div>
+            <div className="text-[8.5px] text-gray-700 mt-1">
+              Tanggal : ....................
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Page indicator on screen/print */}
