@@ -131,7 +131,7 @@ export const BeritaAcaraDoc: React.FC<BeritaAcaraDocProps> = ({ data }) => {
                     key={idx}
                     className="border border-gray-300 rounded overflow-hidden bg-white text-center flex flex-col"
                   >
-                    <div className="relative h-32 w-full bg-gray-100 flex items-center justify-center overflow-hidden">
+                    <div className="relative h-28 w-full bg-gray-100 flex items-center justify-center overflow-hidden">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={src}

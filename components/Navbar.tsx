@@ -1,14 +1,27 @@
 'use client';
 
-import React from 'react';
-import { DocumentType } from '@/lib/types';
-import { FileText, Calculator, Printer, Eye, Edit3, ZoomIn, ZoomOut } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { DocumentType, PrintScope } from '@/lib/types';
+import {
+  FileText,
+  Calculator,
+  Printer,
+  Eye,
+  Edit3,
+  ZoomIn,
+  ZoomOut,
+  Layers,
+  ChevronDown,
+  Check,
+} from 'lucide-react';
 
 interface NavbarProps {
   documentType: DocumentType;
   onDocumentTypeChange: (type: DocumentType) => void;
   activeMobileTab: 'form' | 'preview';
   onMobileTabChange: (tab: 'form' | 'preview') => void;
+  printScope: PrintScope;
+  onPrintScopeChange: (scope: PrintScope) => void;
   onPrint: () => void;
   zoom: number;
   onZoomChange: (zoom: number) => void;
@@ -19,10 +32,26 @@ export const Navbar: React.FC<NavbarProps> = ({
   onDocumentTypeChange,
   activeMobileTab,
   onMobileTabChange,
+  printScope,
+  onPrintScopeChange,
   onPrint,
   zoom,
   onZoomChange,
 }) => {
+  const [isPrintMenuOpen, setIsPrintMenuOpen] = useState(false);
+  const printMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close print menu on click outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (printMenuRef.current && !printMenuRef.current.contains(e.target as Node)) {
+        setIsPrintMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-2xs print:hidden">
       <div className="max-w-[1680px] mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-3">
@@ -69,6 +98,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <Calculator className="w-3.5 h-3.5 text-emerald-700" />
               <span>Bill of Quantity (BQ)</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => onDocumentTypeChange('all')}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md font-semibold transition-all hidden md:inline-flex ${
+                documentType === 'all'
+                  ? 'bg-white text-emerald-900 shadow-xs'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+              title="Tampilkan Berita Acara, ICE, dan BQ sekaligus"
+            >
+              <Layers className="w-3.5 h-3.5 text-emerald-700" />
+              <span>Semua (BA + BQ)</span>
             </button>
           </nav>
         </div>
@@ -134,16 +176,100 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
 
-          {/* Cetak / Download PDF Button */}
-          <button
-            type="button"
-            onClick={onPrint}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold text-white bg-[#204f40] hover:bg-[#163f36] rounded-lg shadow-xs hover:shadow transition-all"
-            title="Cetak atau Simpan PDF"
-          >
-            <Printer className="w-4 h-4" />
-            <span>Cetak / PDF</span>
-          </button>
+          {/* Cetak / Download PDF Button Group */}
+          <div ref={printMenuRef} className="relative inline-flex items-center rounded-lg shadow-xs">
+            {/* Primary Print Button: Immediately triggers print */}
+            <button
+              type="button"
+              onClick={onPrint}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold text-white bg-[#204f40] hover:bg-[#163f36] rounded-l-lg transition-all"
+              title="Cetak atau Simpan PDF Semua Dokumen (BA + ICE + BQ)"
+            >
+              <Printer className="w-4 h-4" />
+              <span>Cetak / PDF</span>
+              <span className="hidden sm:inline-block bg-[#163f36] text-[#b8d9a3] text-[10px] px-1.5 py-0.5 rounded font-mono ml-1 font-bold">
+                {printScope === 'all'
+                  ? 'BA+ICE+BQ (3 Hal)'
+                  : printScope === 'ba-only'
+                  ? 'BA (1 Hal)'
+                  : 'BQ (2 Hal)'}
+              </span>
+            </button>
+
+            {/* Dropdown Toggle */}
+            <button
+              type="button"
+              onClick={() => setIsPrintMenuOpen(!isPrintMenuOpen)}
+              className="px-2 py-2 text-white bg-[#204f40] hover:bg-[#163f36] border-l border-emerald-800 rounded-r-lg transition-all"
+              title="Pilihan Dokumen Cetak"
+            >
+              <ChevronDown className="w-4 h-4" />
+            </button>
+
+            {/* Dropdown Menu */}
+            {isPrintMenuOpen && (
+              <div className="absolute right-0 top-full mt-1.5 w-64 bg-white border border-gray-200 rounded-xl shadow-xl py-1 z-50 text-xs">
+                <div className="px-3 py-1.5 text-[11px] font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100">
+                  Target Cetak / Download PDF
+                </div>
+
+                {/* Option 1: All Documents (Default) */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    onPrintScopeChange('all');
+                    setIsPrintMenuOpen(false);
+                  }}
+                  className="w-full px-3 py-2 text-left flex items-center justify-between hover:bg-emerald-50 transition-colors"
+                >
+                  <div>
+                    <div className="font-bold text-gray-900 flex items-center gap-1.5">
+                      <span>Semua Dokumen Sekaligus</span>
+                      <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.2 rounded">
+                        Auto
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-gray-500 mt-0.5">
+                      3 Halaman: BA + ICE + BQ
+                    </div>
+                  </div>
+                  {printScope === 'all' && <Check className="w-4 h-4 text-emerald-700" />}
+                </button>
+
+                {/* Option 2: Only Berita Acara */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    onPrintScopeChange('ba-only');
+                    setIsPrintMenuOpen(false);
+                  }}
+                  className="w-full px-3 py-2 text-left flex items-center justify-between hover:bg-emerald-50 transition-colors"
+                >
+                  <div>
+                    <div className="font-semibold text-gray-900">Hanya Berita Acara</div>
+                    <div className="text-[11px] text-gray-500 mt-0.5">1 Halaman Dokumen BA</div>
+                  </div>
+                  {printScope === 'ba-only' && <Check className="w-4 h-4 text-emerald-700" />}
+                </button>
+
+                {/* Option 3: Only BQ */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    onPrintScopeChange('bq-only');
+                    setIsPrintMenuOpen(false);
+                  }}
+                  className="w-full px-3 py-2 text-left flex items-center justify-between hover:bg-emerald-50 transition-colors"
+                >
+                  <div>
+                    <div className="font-semibold text-gray-900">Hanya BQ (ICE &amp; Tender)</div>
+                    <div className="text-[11px] text-gray-500 mt-0.5">2 Halaman: ICE &amp; BQ Blank</div>
+                  </div>
+                  {printScope === 'bq-only' && <Check className="w-4 h-4 text-emerald-700" />}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>

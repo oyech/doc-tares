@@ -42,5 +42,6 @@ export interface BQData {
   items: BQItem[];
 }
 
-export type DocumentType = 'berita-acara' | 'bq';
+export type DocumentType = 'berita-acara' | 'bq' | 'all';
 export type BQViewMode = 'all' | 'ice' | 'bq';
+export type PrintScope = 'all' | 'ba-only' | 'bq-only';

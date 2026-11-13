@@ -1,7 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { DocumentType, BeritaAcaraData, BQData, BQViewMode } from '@/lib/types';
+import {
+  DocumentType,
+  BeritaAcaraData,
+  BQData,
+  BQViewMode,
+  PrintScope,
+} from '@/lib/types';
 import { DEFAULT_BERITA_ACARA, DEFAULT_BQ } from '@/lib/constants';
 import {
   generateBeritaAcaraFilename,
@@ -14,13 +20,16 @@ import { BeritaAcaraDoc } from '@/components/BeritaAcaraDoc';
 import { BQForm } from '@/components/BQForm';
 import { BQDoc } from '@/components/BQDoc';
 import { DocumentPreviewWrapper } from '@/components/DocumentPreviewWrapper';
-import { Eye, Edit3, Printer } from 'lucide-react';
+import { Eye, Edit3, Printer, FileText, Calculator } from 'lucide-react';
 
 export default function HomePage() {
   const [documentType, setDocumentType] = useState<DocumentType>('berita-acara');
   const [activeMobileTab, setActiveMobileTab] = useState<'form' | 'preview'>('form');
   const [zoom, setZoom] = useState<number>(1);
   const [bqViewMode, setBqViewMode] = useState<BQViewMode>('all');
+  const [allModeActiveForm, setAllModeActiveForm] = useState<'ba' | 'bq'>('ba');
+  // Default print scope is 'all' (automatically prints BA, ICE, and BQ all together!)
+  const [printScope, setPrintScope] = useState<PrintScope>('all');
 
   // Form states with lazy initialization from localStorage
   const [beritaData, setBeritaData] = useState<BeritaAcaraData>(() => {
@@ -130,10 +139,16 @@ export default function HomePage() {
   // Print Handler
   const handlePrint = () => {
     const originalTitle = document.title;
-    const filename =
-      documentType === 'berita-acara'
-        ? generateBeritaAcaraFilename(beritaData)
-        : generateBqFilename(bqData);
+    let filename = '';
+
+    if (printScope === 'all') {
+      const base = generateBeritaAcaraFilename(beritaData).replace(/\.pdf$/i, '');
+      filename = `${base} - BA ICE BQ.pdf`;
+    } else if (printScope === 'ba-only') {
+      filename = generateBeritaAcaraFilename(beritaData);
+    } else {
+      filename = generateBqFilename(bqData);
+    }
 
     document.title = filename.replace(/\.pdf$/i, '');
     window.print();
@@ -150,6 +165,8 @@ export default function HomePage() {
         onDocumentTypeChange={setDocumentType}
         activeMobileTab={activeMobileTab}
         onMobileTabChange={setActiveMobileTab}
+        printScope={printScope}
+        onPrintScopeChange={setPrintScope}
         onPrint={handlePrint}
         zoom={zoom}
         onZoomChange={setZoom}
@@ -157,16 +174,50 @@ export default function HomePage() {
 
       {/* Main Work Area */}
       <main className="flex-1 max-w-[1680px] w-full mx-auto px-2 sm:px-4 lg:px-6 py-3 sm:py-5">
-        {/* Split Screen Grid on Desktop (lg+), Tabbed on Mobile/Tablet */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-          {/* LEFT: Form Editor (Always visible on desktop, or when activeMobileTab === 'form' on mobile) */}
+        {/* ========================================================
+            SCREEN-ONLY VIEW: Split Screen Grid on Desktop, Tabbed on Mobile
+            Completely hidden during print so it doesn't cause page spills
+            ======================================================== */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start print:hidden">
+          {/* LEFT: Form Editor */}
           <div
-            className={`lg:col-span-5 xl:col-span-5 space-y-4 print:hidden ${
+            className={`lg:col-span-5 xl:col-span-5 space-y-4 ${
               activeMobileTab === 'preview' ? 'hidden lg:block' : 'block'
             }`}
           >
+            {/* If 'all' mode is active, provide quick tabs to switch editor form */}
+            {documentType === 'all' && (
+              <div className="flex rounded-xl bg-white p-1 border border-gray-200 shadow-2xs mb-2">
+                <button
+                  type="button"
+                  onClick={() => setAllModeActiveForm('ba')}
+                  className={`flex-1 py-2 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition-all ${
+                    allModeActiveForm === 'ba'
+                      ? 'bg-emerald-800 text-white shadow-xs'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>Form Berita Acara</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setAllModeActiveForm('bq')}
+                  className={`flex-1 py-2 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition-all ${
+                    allModeActiveForm === 'bq'
+                      ? 'bg-emerald-800 text-white shadow-xs'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  <Calculator className="w-3.5 h-3.5" />
+                  <span>Form Bill of Quantity</span>
+                </button>
+              </div>
+            )}
+
             <div className="bg-white/40 backdrop-blur-xs p-1 rounded-xl">
-              {documentType === 'berita-acara' ? (
+              {documentType === 'berita-acara' ||
+              (documentType === 'all' && allModeActiveForm === 'ba') ? (
                 <BeritaAcaraForm
                   data={beritaData}
                   onChange={setBeritaData}
@@ -186,36 +237,108 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* RIGHT: Document Live Preview (Always visible on desktop, or when activeMobileTab === 'preview' on mobile) */}
+          {/* RIGHT: Document Live Preview (Screen View) */}
           <div
-            className={`lg:col-span-7 xl:col-span-7 print-container ${
+            className={`lg:col-span-7 xl:col-span-7 ${
               activeMobileTab === 'form' ? 'hidden lg:block' : 'block'
             }`}
           >
             {/* Header info bar for preview pane on desktop */}
-            <div className="hidden lg:flex items-center justify-between px-3 py-2 bg-emerald-900/5 rounded-xl border border-emerald-900/10 mb-3 text-xs text-emerald-950 font-medium print:hidden">
+            <div className="hidden lg:flex items-center justify-between px-3 py-2 bg-emerald-900/5 rounded-xl border border-emerald-900/10 mb-3 text-xs text-emerald-950 font-medium">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>Live Preview A4 (Otomatis Diperbarui)</span>
+                <span>
+                  Live Preview A4{' '}
+                  {documentType === 'all'
+                    ? '(3 Halaman: BA, ICE, BQ)'
+                    : documentType === 'berita-acara'
+                    ? '(Berita Acara)'
+                    : '(Bill of Quantity)'}
+                </span>
               </div>
-              <div className="text-gray-600">
-                {documentType === 'berita-acara'
-                  ? `File: ${generateBeritaAcaraFilename(beritaData)}`
-                  : `File: ${generateBqFilename(bqData)}`}
+              <div className="text-gray-600 font-mono text-[11px]">
+                {documentType === 'all'
+                  ? `${generateBeritaAcaraFilename(beritaData).replace(/\.pdf$/i, '')} - BA ICE BQ.pdf`
+                  : documentType === 'berita-acara'
+                  ? generateBeritaAcaraFilename(beritaData)
+                  : generateBqFilename(bqData)}
               </div>
             </div>
 
             {/* Document sheet wrapper */}
-            <div className="bg-gray-200/50 rounded-2xl p-2 sm:p-4 border border-gray-200 min-h-[calc(100vh-160px)] flex justify-center items-start overflow-hidden print:p-0 print:border-none print:bg-white print:min-h-0">
+            <div className="bg-gray-200/50 rounded-2xl p-2 sm:p-4 border border-gray-200 min-h-[calc(100vh-160px)] flex justify-center items-start overflow-hidden">
               <DocumentPreviewWrapper zoom={zoom}>
-                {documentType === 'berita-acara' ? (
+                {documentType === 'berita-acara' && (
                   <BeritaAcaraDoc data={beritaData} />
-                ) : (
+                )}
+                {documentType === 'bq' && (
                   <BQDoc data={bqData} viewMode={bqViewMode} />
+                )}
+                {documentType === 'all' && (
+                  <div className="space-y-6">
+                    <div>
+                      <div className="text-center font-bold text-xs text-gray-500 mb-2 uppercase tracking-wider">
+                        Halaman 1 — Berita Acara
+                      </div>
+                      <BeritaAcaraDoc data={beritaData} />
+                    </div>
+                    <div>
+                      <div className="text-center font-bold text-xs text-gray-500 mb-2 uppercase tracking-wider">
+                        Halaman 2 — Internal Cost Estimation (ICE)
+                      </div>
+                      <BQDoc data={bqData} viewMode="ice" />
+                    </div>
+                    <div>
+                      <div className="text-center font-bold text-xs text-gray-500 mb-2 uppercase tracking-wider">
+                        Halaman 3 — Bill of Quantity (BQ)
+                      </div>
+                      <BQDoc data={bqData} viewMode="bq" />
+                    </div>
+                  </div>
                 )}
               </DocumentPreviewWrapper>
             </div>
           </div>
+        </div>
+
+        {/* ========================================================
+            PRINT-ONLY BUNDLE: Dedicated pagination container
+            Automatically prints BA, ICE, and BQ with ZERO blank pages
+            ======================================================== */}
+        <div className="hidden print:block print-bundle-root">
+          {printScope === 'all' && (
+            <>
+              {/* Halaman 1: Berita Acara */}
+              <div className="print-page">
+                <BeritaAcaraDoc data={beritaData} />
+              </div>
+              {/* Halaman 2: Internal Cost Estimation */}
+              <div className="print-page">
+                <BQDoc data={bqData} viewMode="ice" />
+              </div>
+              {/* Halaman 3: Bill of Quantity */}
+              <div className="print-page">
+                <BQDoc data={bqData} viewMode="bq" />
+              </div>
+            </>
+          )}
+
+          {printScope === 'ba-only' && (
+            <div className="print-page">
+              <BeritaAcaraDoc data={beritaData} />
+            </div>
+          )}
+
+          {printScope === 'bq-only' && (
+            <>
+              <div className="print-page">
+                <BQDoc data={bqData} viewMode="ice" />
+              </div>
+              <div className="print-page">
+                <BQDoc data={bqData} viewMode="bq" />
+              </div>
+            </>
+          )}
         </div>
       </main>
 
@@ -225,7 +348,7 @@ export default function HomePage() {
           type="button"
           onClick={handlePrint}
           className="p-3 bg-white text-gray-800 rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50 active:scale-95 transition-all"
-          title="Cetak Dokumen"
+          title="Cetak Semua Dokumen (BA + ICE + BQ)"
         >
           <Printer className="w-5 h-5 text-emerald-800" />
         </button>
