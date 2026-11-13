@@ -63,9 +63,10 @@ test('Berita Acara Filename matches Python test cases', () => {
 });
 
 test('Berita Acara Number generation with Roman month and Dept', () => {
-  // Default dept is ENG
-  assert.equal(generateBeritaAcaraNumber('67', '2026-08-15'), '067/BAK-TAR/ENG/VIII/2026');
+  // Default dept is ENG, no automatic 00 padding
+  assert.equal(generateBeritaAcaraNumber('67', '2026-08-15'), '67/BAK-TAR/ENG/VIII/2026');
   assert.equal(generateBeritaAcaraNumber('278', '2026-10-20'), '278/BAK-TAR/ENG/X/2026');
+  assert.equal(generateBeritaAcaraNumber('1', '2026-01-10'), '1/BAK-TAR/ENG/I/2026');
 
   // Custom departments: GS, HRGA, CH, custom
   assert.equal(generateBeritaAcaraNumber('278', '2026-10-20', 'GS'), '278/BAK-TAR/GS/X/2026');
@@ -83,8 +84,8 @@ test('Berita Acara Number generation with Roman month and Dept', () => {
     '278/BAK-TAR/HRGA/X/2026'
   );
   assert.equal(
-    generateBeritaAcaraNumber('067/BAK-TAR/ENG/VIII/2026', '2026-08-15', 'ENG'),
-    '067/BAK-TAR/ENG/VIII/2026'
+    generateBeritaAcaraNumber('67/BAK-TAR/ENG/VIII/2026', '2026-08-15', 'ENG'),
+    '67/BAK-TAR/ENG/VIII/2026'
   );
 });
 

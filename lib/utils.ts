@@ -90,10 +90,11 @@ export function generateBeritaAcaraNumber(
   const year = parseInt(yearStr, 10) || new Date().getFullYear();
   const month = parseInt(monthStr, 10) || (new Date().getMonth() + 1);
 
-  const nomorPadded = prefix.padStart(3, '0');
+  // Keep prefix exactly as input by user without automatically adding 00
+  const cleanPrefix = prefix;
   const romanMonth = ROMAN_MONTHS[month] || String(month);
 
-  return `${nomorPadded}/BAK-TAR/${cleanDept}/${romanMonth}/${year}`;
+  return `${cleanPrefix}/BAK-TAR/${cleanDept}/${romanMonth}/${year}`;
 }
 
 /**

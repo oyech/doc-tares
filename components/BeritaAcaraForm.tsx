@@ -47,7 +47,7 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
 
   // Current active department
   const currentDept = data.dept || extractDeptFromNomor(data.nomor) || 'ENG';
-  const currentNomorUrut = extractNomorUrut(data.nomor) || '001';
+  const currentNomorUrut = extractNomorUrut(data.nomor) || '';
 
   const handleChange = (field: keyof BeritaAcaraData, value: string) => {
     onChange({
@@ -63,7 +63,7 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
       return;
     }
 
-    const updatedNomor = generateBeritaAcaraNumber(data.nomor || '001', data.tanggal, deptValue);
+    const updatedNomor = generateBeritaAcaraNumber(data.nomor || '1', data.tanggal, deptValue);
     onChange({
       ...data,
       dept: deptValue,
@@ -86,7 +86,7 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
     }
 
     // Immediately select the newly added department and update nomor
-    const updatedNomor = generateBeritaAcaraNumber(data.nomor || '001', data.tanggal, cleanDept);
+    const updatedNomor = generateBeritaAcaraNumber(data.nomor || '1', data.tanggal, cleanDept);
     onChange({
       ...data,
       dept: cleanDept,

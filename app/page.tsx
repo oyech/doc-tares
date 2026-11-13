@@ -76,7 +76,7 @@ export default function HomePage() {
     if (confirm('Apakah Anda yakin ingin mengosongkan formulir Berita Acara?')) {
       const today = new Date().toISOString().split('T')[0];
       const blankBA: BeritaAcaraData = {
-        nomor: generateBeritaAcaraNumber('001', today, 'ENG'),
+        nomor: generateBeritaAcaraNumber('1', today, 'ENG'),
         dept: 'ENG',
         tanggal: today,
         waktu: '10:00',
