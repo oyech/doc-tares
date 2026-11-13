@@ -31,11 +31,11 @@ export const BeritaAcaraDoc: React.FC<BeritaAcaraDocProps> = ({ data }) => {
         </div>
 
         {/* Center: Title */}
-        <div className="text-center flex-1 px-2">
-          <h2 className="text-[17px] font-bold tracking-tight text-black leading-tight">
+        <div className="text-center flex-1 px-3">
+          <h2 className="text-[21px] font-extrabold tracking-normal text-black leading-tight uppercase">
             PROPERTY MANAGEMENT
           </h2>
-          <h3 className="text-[13.5px] font-bold tracking-normal text-black leading-snug">
+          <h3 className="text-[16.5px] font-bold tracking-wide text-black leading-snug uppercase mt-0.5">
             TAMAN ANGGREK RESIDENCES
           </h3>
         </div>

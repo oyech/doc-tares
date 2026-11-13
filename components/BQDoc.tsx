@@ -25,10 +25,10 @@ const BQSinglePage: React.FC<BQPageProps> = ({ data, isIce, pageNumber }) => {
       {/* 1. Header: Title & Logo */}
       <div className="flex items-center justify-between pb-3 pt-1 border-b border-transparent">
         <div>
-          <h1 className="text-[16px] font-bold tracking-tight text-black uppercase">
+          <h1 className="text-[17px] font-bold tracking-tight text-black uppercase">
             {title}
           </h1>
-          <p className="text-[10px] text-gray-700 font-semibold tracking-wide">
+          <p className="text-[12.5px] text-black font-bold tracking-wide mt-0.5 uppercase">
             TAMAN ANGGREK RESIDENCES
           </p>
         </div>
