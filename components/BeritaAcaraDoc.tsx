@@ -11,8 +11,6 @@ interface BeritaAcaraDocProps {
 
 export const BeritaAcaraDoc: React.FC<BeritaAcaraDocProps> = ({ data }) => {
   const dayPhrase = formatIndonesianDayPhrase(data.tanggal);
-  const closingSentence =
-    'Demikian Berita Acara ini dibuat untuk dipergunakan sebagaimana mestinya, atas perhatian dan kerja samanya diucapkan terima kasih.';
 
   return (
     <div className="a4-document text-black bg-white select-text">
@@ -158,7 +156,6 @@ export const BeritaAcaraDoc: React.FC<BeritaAcaraDocProps> = ({ data }) => {
           </div>
           <div className="p-2 leading-relaxed text-justify whitespace-pre-line min-h-[60px]">
             {data.solusi || 'Belum ada tindakan solusi yang diinputkan.'}
-            <div className="mt-2.5 font-normal">{closingSentence}</div>
           </div>
         </div>
       </div>
