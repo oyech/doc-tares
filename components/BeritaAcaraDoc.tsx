@@ -176,8 +176,8 @@ export const BeritaAcaraDoc: React.FC<BeritaAcaraDocProps> = ({ data }) => {
             </tr>
           </thead>
           <tbody>
-            {/* Paraf Row (perlebar row kolom tanda tangan - ekstra lega) */}
-            <tr className="border-b border-black h-[115px] align-top">
+            {/* Paraf Row (tinggi row kolom tanda tangan pas 100px) */}
+            <tr className="border-b border-black h-[100px] align-top">
               <td className="border-r border-black p-1 text-[8.5px] text-gray-500">
                 Paraf:
               </td>

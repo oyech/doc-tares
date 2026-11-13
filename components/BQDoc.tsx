@@ -244,8 +244,8 @@ const BQSinglePage: React.FC<BQPageProps> = ({ data, isIce, pageNumber }) => {
             </tr>
           </thead>
           <tbody>
-            {/* Paraf & Names (taller row for signature space - ekstra lega) */}
-            <tr className="border-none h-[120px] align-bottom">
+            {/* Paraf & Names (tinggi row tanda tangan pas 100px) */}
+            <tr className="border-none h-[100px] align-bottom">
               <td className="p-2 pb-1 border-none text-center">
                 <div className="font-bold text-[10px] leading-tight text-black underline underline-offset-2">
                   {data.dibuatOleh || '................................'}
