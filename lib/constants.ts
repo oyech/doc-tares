@@ -78,7 +78,7 @@ export const DEFAULT_BQ: BQData = {
   jabatanDibuatOleh: 'Engineering Ast. Manager',
   menyetujui: 'Bobby Firdaus',
   jabatanMenyetujui: 'Property Manager',
-  mengetahui: 'Hendra Wijaya',
+  mengetahui: 'Dirk Fischbach',
   jabatanMengetahui: 'GM Building Management',
   items: [
     {
