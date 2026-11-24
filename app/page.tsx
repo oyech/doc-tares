@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useSyncExternalStore } from 'react';
 import {
   DocumentType,
   BeritaAcaraData,
@@ -34,8 +34,26 @@ import {
   UploadCloud,
 } from 'lucide-react';
 
+const emptySubscribe = () => () => {};
+
 export default function HomePage() {
-  const [documentType, setDocumentType] = useState<DocumentType>('berita-acara');
+  const isMounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+
+  const [documentType, setDocumentType] = useState<DocumentType>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const savedDocType = localStorage.getItem('reporteng_doc_type');
+        if (savedDocType && (savedDocType === 'berita-acara' || savedDocType === 'bq' || savedDocType === 'all')) {
+          return savedDocType as DocumentType;
+        }
+      } catch {}
+    }
+    return 'berita-acara';
+  });
   const [activeMobileTab, setActiveMobileTab] = useState<'form' | 'preview'>('form');
   const [zoom, setZoom] = useState<number>(1);
   const [bqViewMode, setBqViewMode] = useState<BQViewMode>('all');
@@ -296,6 +314,17 @@ export default function HomePage() {
       document.title = originalTitle;
     }, 1500);
   };
+
+  if (!isMounted) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#f5f7f8]">
+        <div className="flex flex-col items-center gap-3 text-gray-500">
+          <Loader2 className="w-8 h-8 animate-spin text-emerald-600" />
+          <p className="text-sm font-medium">Memuat aplikasi...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f5f7f8]">
