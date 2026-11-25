@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ReportEng — Document Generator (Berita Acara & BQ)",
+  title: "Doc Maker — TAMAN ANGGREK RESIDENCE",
   description: "Aplikasi pembuatan dokumen Berita Acara dan Bill of Quantity (BQ) Engineering Taman Anggrek Residences.",
   icons: {
     icon: [
@@ -19,7 +19,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#204f40",
+  themeColor: "#14532D",
 };
 
 export default function RootLayout({
@@ -29,7 +29,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" className="h-full antialiased">
-      <body className="min-h-full flex flex-col bg-[#f5f7f8] text-gray-900">
+      <body className="min-h-full flex flex-col bg-[#F8FAFC] text-gray-900">
         {children}
       </body>
     </html>

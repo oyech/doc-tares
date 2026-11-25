@@ -59,38 +59,38 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-2xs print:hidden">
+    <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-2xs print:hidden">
       <div className="max-w-[1680px] mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-3">
         {/* Brand & Title */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#204f40] text-white font-black text-sm tracking-tighter shadow-xs">
-              RE<span className="text-[#b8d9a3] font-bold">.</span>
+          <div className="flex items-center gap-2.5">
+            <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#14532D] text-white shadow-xs">
+              <FileText className="w-4 h-4 text-emerald-100" />
             </span>
-            <div className="leading-tight">
-              <span className="font-extrabold text-sm sm:text-base tracking-tight text-gray-900 block">
-                ReportEng <span className="font-normal text-xs text-gray-700 hidden sm:inline">Doc Maker</span>
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-2 leading-tight">
+              <span className="font-bold text-sm sm:text-base tracking-tight text-slate-900">
+                Doc Maker
               </span>
-              <span className="text-[10px] text-gray-700 font-medium tracking-wide block">
-                TAMAN ANGGREK RESIDENCES
+              <span className="text-[10px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">
+                TAMAN ANGGREK RESIDENCE
               </span>
             </div>
           </div>
 
-          <div className="h-6 w-[1px] bg-gray-200 hidden md:block"></div>
+          <div className="h-5 w-[1px] bg-slate-200 hidden md:block"></div>
 
           {/* Document Type Switcher Pills */}
-          <nav className="inline-flex rounded-lg bg-gray-100 p-1 border border-gray-200 text-xs">
+          <nav className="inline-flex rounded-lg bg-slate-100 p-1 border border-slate-200 text-xs">
             <button
               type="button"
               onClick={() => onDocumentTypeChange('berita-acara')}
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md font-semibold transition-all ${
                 documentType === 'berita-acara'
-                  ? 'bg-white text-emerald-900 shadow-xs'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <FileText className="w-3.5 h-3.5 text-emerald-700" />
+              <FileText className="w-3.5 h-3.5 text-[#15803D]" />
               <span>Berita Acara</span>
             </button>
             <button
@@ -98,11 +98,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => onDocumentTypeChange('bq')}
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md font-semibold transition-all ${
                 documentType === 'bq'
-                  ? 'bg-white text-emerald-900 shadow-xs'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Calculator className="w-3.5 h-3.5 text-emerald-700" />
+              <Calculator className="w-3.5 h-3.5 text-[#15803D]" />
               <span>Bill of Quantity (BQ)</span>
             </button>
             <button
@@ -110,12 +110,12 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => onDocumentTypeChange('all')}
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md font-semibold transition-all hidden md:inline-flex ${
                 documentType === 'all'
-                  ? 'bg-white text-emerald-900 shadow-xs'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
               title="Tampilkan Berita Acara, ICE, dan BQ sekaligus"
             >
-              <Layers className="w-3.5 h-3.5 text-emerald-700" />
+              <Layers className="w-3.5 h-3.5 text-[#15803D]" />
               <span>Semua (BA + BQ)</span>
             </button>
           </nav>
@@ -124,22 +124,22 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Right side actions: Mobile Tab Switcher, Zoom Controls, Print/PDF button */}
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Zoom controls (visible on desktop) */}
-          <div className="hidden lg:flex items-center bg-gray-50 border border-gray-200 rounded-lg p-0.5 text-xs text-gray-600">
+          <div className="hidden lg:flex items-center bg-slate-50 border border-slate-200 rounded-lg p-0.5 text-xs text-slate-600">
             <button
               type="button"
               onClick={() => onZoomChange(Math.max(0.6, Math.round((zoom - 0.1) * 10) / 10))}
-              className="p-1.5 hover:bg-white hover:text-gray-900 rounded transition-colors"
+              className="p-1.5 hover:bg-white hover:text-slate-900 rounded transition-colors"
               title="Perkecil Preview"
             >
               <ZoomOut className="w-3.5 h-3.5" />
             </button>
-            <span className="px-2 font-mono text-[11px] font-semibold text-gray-700">
+            <span className="px-2 font-mono text-[11px] font-semibold text-slate-700">
               {Math.round(zoom * 100)}%
             </span>
             <button
               type="button"
               onClick={() => onZoomChange(Math.min(1.4, Math.round((zoom + 0.1) * 10) / 10))}
-              className="p-1.5 hover:bg-white hover:text-gray-900 rounded transition-colors"
+              className="p-1.5 hover:bg-white hover:text-slate-900 rounded transition-colors"
               title="Perbesar Preview"
             >
               <ZoomIn className="w-3.5 h-3.5" />
@@ -147,7 +147,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               type="button"
               onClick={() => onZoomChange(1)}
-              className="px-1.5 py-1 text-[10px] hover:bg-white hover:text-gray-900 rounded font-semibold text-gray-500"
+              className="px-1.5 py-1 text-[10px] hover:bg-white hover:text-slate-900 rounded font-semibold text-slate-500"
               title="Reset Zoom ke 100%"
             >
               100%
@@ -155,17 +155,17 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Mobile Screen Tab Toggle (Form / Preview) */}
-          <div className="flex lg:hidden rounded-lg bg-gray-100 p-0.5 border border-gray-200 text-xs">
+          <div className="flex lg:hidden rounded-lg bg-slate-100 p-0.5 border border-slate-200 text-xs">
             <button
               type="button"
               onClick={() => onMobileTabChange('form')}
               className={`inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md font-semibold transition-all ${
                 activeMobileTab === 'form'
-                  ? 'bg-white text-emerald-900 shadow-xs'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Edit3 className="w-3.5 h-3.5" />
+              <Edit3 className="w-3.5 h-3.5 text-slate-700" />
               <span>Form</span>
             </button>
             <button
@@ -173,44 +173,44 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => onMobileTabChange('preview')}
               className={`inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md font-semibold transition-all ${
                 activeMobileTab === 'preview'
-                  ? 'bg-white text-emerald-900 shadow-xs'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Eye className="w-3.5 h-3.5 text-emerald-700" />
+              <Eye className="w-3.5 h-3.5 text-[#15803D]" />
               <span>Preview</span>
             </button>
           </div>
 
-          {/* Upload / Edit PDF Button */}
+          {/* Upload / Edit PDF Button (Tombol Sekunder: putih dengan border abu-abu halus #CBD5E1) */}
           <button
             type="button"
             onClick={onUploadPdfClick}
             disabled={isLoadingPdf}
-            className="inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-semibold text-emerald-900 bg-white hover:bg-emerald-50 active:scale-95 border border-emerald-300 rounded-lg shadow-2xs transition-all disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-medium text-slate-700 bg-white hover:bg-slate-50 active:scale-95 border border-slate-300 rounded-lg shadow-2xs transition-all disabled:opacity-50"
             title="Upload dokumen PDF yang sudah disimpan untuk diedit kembali"
           >
             {isLoadingPdf ? (
-              <Loader2 className="w-4 h-4 text-emerald-700 animate-spin" />
+              <Loader2 className="w-4 h-4 text-[#15803D] animate-spin" />
             ) : (
-              <Upload className="w-4 h-4 text-emerald-700" />
+              <Upload className="w-4 h-4 text-slate-600" />
             )}
             <span className="hidden sm:inline">Upload / Edit PDF</span>
             <span className="sm:hidden">Upload</span>
           </button>
 
-          {/* Cetak / Download PDF Button Group */}
+          {/* Cetak / Download PDF Button Group (Tombol Utama: solid hijau tua #14532D) */}
           <div ref={printMenuRef} className="relative inline-flex items-center rounded-lg shadow-xs">
             {/* Primary Print Button: Immediately triggers print */}
             <button
               type="button"
               onClick={onPrint}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold text-white bg-[#204f40] hover:bg-[#163f36] rounded-l-lg transition-all"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold text-white bg-[#14532D] hover:bg-[#0f3d21] rounded-l-lg transition-colors shadow-xs"
               title="Cetak atau Simpan PDF Semua Dokumen (BA + ICE + BQ)"
             >
               <Printer className="w-4 h-4" />
               <span>Cetak / PDF</span>
-              <span className="hidden sm:inline-block bg-[#163f36] text-[#b8d9a3] text-[10px] px-1.5 py-0.5 rounded font-mono ml-1 font-bold">
+              <span className="hidden sm:inline-block bg-[#0f3d21] text-emerald-200 text-[10px] px-1.5 py-0.5 rounded font-mono ml-1 font-semibold border border-emerald-800/40">
                 {printScope === 'all'
                   ? 'BA+ICE+BQ (3 Hal)'
                   : printScope === 'ba-only'
@@ -223,7 +223,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               type="button"
               onClick={() => setIsPrintMenuOpen(!isPrintMenuOpen)}
-              className="px-2 py-2 text-white bg-[#204f40] hover:bg-[#163f36] border-l border-emerald-800 rounded-r-lg transition-all"
+              className="px-2 py-2 text-white bg-[#14532D] hover:bg-[#0f3d21] border-l border-emerald-800/60 rounded-r-lg transition-colors"
               title="Pilihan Dokumen Cetak"
             >
               <ChevronDown className="w-4 h-4" />
@@ -231,8 +231,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {/* Dropdown Menu */}
             {isPrintMenuOpen && (
-              <div className="absolute right-0 top-full mt-1.5 w-64 bg-white border border-gray-200 rounded-xl shadow-xl py-1 z-50 text-xs">
-                <div className="px-3 py-1.5 text-[11px] font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100">
+              <div className="absolute right-0 top-full mt-1.5 w-64 bg-white border border-slate-200 rounded-xl shadow-xl py-1 z-50 text-xs">
+                <div className="px-3 py-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100">
                   Target Cetak / Download PDF
                 </div>
 
@@ -243,20 +243,20 @@ export const Navbar: React.FC<NavbarProps> = ({
                     onPrintScopeChange('all');
                     setIsPrintMenuOpen(false);
                   }}
-                  className="w-full px-3 py-2 text-left flex items-center justify-between hover:bg-emerald-50 transition-colors"
+                  className="w-full px-3 py-2 text-left flex items-center justify-between hover:bg-slate-50 transition-colors"
                 >
                   <div>
-                    <div className="font-bold text-gray-900 flex items-center gap-1.5">
+                    <div className="font-semibold text-slate-900 flex items-center gap-1.5">
                       <span>Semua Dokumen Sekaligus</span>
-                      <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.2 rounded">
+                      <span className="text-[10px] bg-emerald-50 text-[#14532D] border border-emerald-200 font-bold px-1.5 py-0.2 rounded">
                         Auto
                       </span>
                     </div>
-                    <div className="text-[11px] text-gray-500 mt-0.5">
+                    <div className="text-[11px] text-slate-500 mt-0.5">
                       3 Halaman: BA + ICE + BQ
                     </div>
                   </div>
-                  {printScope === 'all' && <Check className="w-4 h-4 text-emerald-700" />}
+                  {printScope === 'all' && <Check className="w-4 h-4 text-[#15803D]" />}
                 </button>
 
                 {/* Option 2: Only Berita Acara */}
@@ -266,13 +266,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                     onPrintScopeChange('ba-only');
                     setIsPrintMenuOpen(false);
                   }}
-                  className="w-full px-3 py-2 text-left flex items-center justify-between hover:bg-emerald-50 transition-colors"
+                  className="w-full px-3 py-2 text-left flex items-center justify-between hover:bg-slate-50 transition-colors"
                 >
                   <div>
-                    <div className="font-semibold text-gray-900">Hanya Berita Acara</div>
-                    <div className="text-[11px] text-gray-500 mt-0.5">1 Halaman Dokumen BA</div>
+                    <div className="font-semibold text-slate-900">Hanya Berita Acara</div>
+                    <div className="text-[11px] text-slate-500 mt-0.5">1 Halaman Dokumen BA</div>
                   </div>
-                  {printScope === 'ba-only' && <Check className="w-4 h-4 text-emerald-700" />}
+                  {printScope === 'ba-only' && <Check className="w-4 h-4 text-[#15803D]" />}
                 </button>
 
                 {/* Option 3: Only BQ */}
@@ -282,13 +282,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                     onPrintScopeChange('bq-only');
                     setIsPrintMenuOpen(false);
                   }}
-                  className="w-full px-3 py-2 text-left flex items-center justify-between hover:bg-emerald-50 transition-colors"
+                  className="w-full px-3 py-2 text-left flex items-center justify-between hover:bg-slate-50 transition-colors"
                 >
                   <div>
-                    <div className="font-semibold text-gray-900">Hanya BQ (ICE &amp; Tender)</div>
-                    <div className="text-[11px] text-gray-500 mt-0.5">2 Halaman: ICE &amp; BQ Blank</div>
+                    <div className="font-semibold text-slate-900">Hanya BQ (ICE &amp; Tender)</div>
+                    <div className="text-[11px] text-slate-500 mt-0.5">2 Halaman: ICE &amp; BQ Blank</div>
                   </div>
-                  {printScope === 'bq-only' && <Check className="w-4 h-4 text-emerald-700" />}
+                  {printScope === 'bq-only' && <Check className="w-4 h-4 text-[#15803D]" />}
                 </button>
               </div>
             )}

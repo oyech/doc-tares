@@ -251,7 +251,7 @@ export default function HomePage() {
           type: 'warning',
           title: 'Format Dokumen Tidak Lengkap',
           message:
-            'Teks PDF berhasil dibaca namun field standar ReportEng tidak terdeteksi lengkap. Pastikan file PDF merupakan dokumen hasil cetak/simpan ReportEng.',
+            'Teks PDF berhasil dibaca namun field standar dokumen tidak terdeteksi lengkap. Pastikan file PDF merupakan dokumen hasil cetak/simpan Doc Maker Taman Anggrek Residence.',
           fileName: file.name,
         });
       }
@@ -317,9 +317,9 @@ export default function HomePage() {
 
   if (!isMounted) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#f5f7f8]">
-        <div className="flex flex-col items-center gap-3 text-gray-500">
-          <Loader2 className="w-8 h-8 animate-spin text-emerald-600" />
+      <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]">
+        <div className="flex flex-col items-center gap-3 text-slate-500">
+          <Loader2 className="w-8 h-8 animate-spin text-[#15803D]" />
           <p className="text-sm font-medium">Memuat aplikasi...</p>
         </div>
       </div>
@@ -327,7 +327,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f5f7f8]">
+    <div className="min-h-screen flex flex-col bg-[#F8FAFC]">
       {/* Top Navbar */}
       <Navbar
         documentType={documentType}
@@ -357,15 +357,15 @@ export default function HomePage() {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className="relative flex-1 max-w-[1680px] w-full mx-auto px-2 sm:px-4 lg:px-6 py-3 sm:py-5"
+        className="relative flex-1 max-w-[1680px] w-full mx-auto px-2 sm:px-4 lg:px-6 py-4 sm:py-6"
       >
         {/* Drag & Drop Visual Overlay */}
         {isDraggingFile && (
-          <div className="absolute inset-0 z-50 bg-emerald-900/80 backdrop-blur-xs rounded-2xl flex flex-col items-center justify-center text-white border-4 border-dashed border-emerald-300 p-6 pointer-events-none transition-all animate-in fade-in duration-150">
-            <UploadCloud className="w-16 h-16 text-[#b8d9a3] animate-bounce mb-3" />
+          <div className="absolute inset-0 z-50 bg-[#14532D]/90 backdrop-blur-xs rounded-2xl flex flex-col items-center justify-center text-white border-4 border-dashed border-emerald-300 p-6 pointer-events-none transition-all animate-in fade-in duration-150">
+            <UploadCloud className="w-16 h-16 text-emerald-200 animate-bounce mb-3" />
             <h3 className="text-xl font-bold">Lepaskan File PDF di Sini</h3>
             <p className="text-sm text-emerald-100 mt-1">
-              Dokumen akan otomatis diekstrak dan diisikan ke formulir editor ReportEng
+              Dokumen akan otomatis diekstrak dan diisikan ke formulir editor Doc Maker
             </p>
           </div>
         )}
@@ -383,7 +383,7 @@ export default function HomePage() {
           >
             <div className="flex items-start gap-2.5">
               {pdfNotification.type === 'success' ? (
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 mt-0.5 shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-[#15803D] mt-0.5 shrink-0" />
               ) : (
                 <AlertCircle
                   className={`w-5 h-5 mt-0.5 shrink-0 ${
@@ -395,12 +395,12 @@ export default function HomePage() {
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="font-bold text-sm">{pdfNotification.title}</span>
                   {pdfNotification.fileName && (
-                    <span className="font-mono text-[11px] bg-white/80 px-2 py-0.5 rounded border border-gray-200 font-medium">
+                    <span className="font-mono text-[11px] bg-white/80 px-2 py-0.5 rounded border border-slate-200 font-medium">
                       {pdfNotification.fileName}
                     </span>
                   )}
                 </div>
-                <p className="mt-0.5 leading-relaxed text-gray-700">
+                <p className="mt-0.5 leading-relaxed text-slate-700">
                   {pdfNotification.message}
                 </p>
               </div>
@@ -408,7 +408,7 @@ export default function HomePage() {
             <button
               type="button"
               onClick={() => setPdfNotification(null)}
-              className="p-1 text-gray-400 hover:text-gray-700 rounded-lg hover:bg-white/60 transition-colors"
+              className="p-1 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-white/60 transition-colors"
               title="Tutup notifikasi"
             >
               <X className="w-4 h-4" />
@@ -418,16 +418,17 @@ export default function HomePage() {
 
         {/* Loading Indicator for PDF parsing */}
         {isLoadingPdf && (
-          <div className="mb-4 p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-3 text-xs text-emerald-900 font-semibold shadow-2xs">
-            <Loader2 className="w-4 h-4 text-emerald-700 animate-spin" />
+          <div className="mb-4 p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-3 text-xs text-emerald-950 font-semibold shadow-2xs">
+            <Loader2 className="w-4 h-4 text-[#15803D] animate-spin" />
             <span>Sedang membaca dan menganalisis teks dokumen PDF... Mohon tunggu sebentar.</span>
           </div>
         )}
+
         {/* ========================================================
             SCREEN-ONLY VIEW: Split Screen Grid on Desktop, Tabbed on Mobile
             Completely hidden during print so it doesn't cause page spills
             ======================================================== */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start print:hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-start print:hidden">
           {/* LEFT: Form Editor */}
           <div
             className={`lg:col-span-5 xl:col-span-5 space-y-4 ${
@@ -436,35 +437,35 @@ export default function HomePage() {
           >
             {/* If 'all' mode is active, provide quick tabs to switch editor form */}
             {documentType === 'all' && (
-              <div className="flex rounded-xl bg-white p-1 border border-gray-200 shadow-2xs mb-2">
+              <div className="flex rounded-xl bg-slate-100 p-1 border border-slate-200 shadow-2xs mb-2">
                 <button
                   type="button"
                   onClick={() => setAllModeActiveForm('ba')}
-                  className={`flex-1 py-2 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition-all ${
+                  className={`flex-1 py-2 text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-all ${
                     allModeActiveForm === 'ba'
-                      ? 'bg-emerald-800 text-white shadow-xs'
-                      : 'text-gray-600 hover:text-gray-900'
+                      ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80'
+                      : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
-                  <FileText className="w-3.5 h-3.5" />
+                  <FileText className="w-3.5 h-3.5 text-[#15803D]" />
                   <span>Form Berita Acara</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setAllModeActiveForm('bq')}
-                  className={`flex-1 py-2 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition-all ${
+                  className={`flex-1 py-2 text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-all ${
                     allModeActiveForm === 'bq'
-                      ? 'bg-emerald-800 text-white shadow-xs'
-                      : 'text-gray-600 hover:text-gray-900'
+                      ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80'
+                      : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
-                  <Calculator className="w-3.5 h-3.5" />
+                  <Calculator className="w-3.5 h-3.5 text-[#15803D]" />
                   <span>Form Bill of Quantity</span>
                 </button>
               </div>
             )}
 
-            <div className="bg-white/40 backdrop-blur-xs p-1 rounded-xl">
+            <div>
               {documentType === 'berita-acara' ||
               (documentType === 'all' && allModeActiveForm === 'ba') ? (
                 <BeritaAcaraForm
@@ -495,19 +496,21 @@ export default function HomePage() {
             }`}
           >
             {/* Header info bar for preview pane on desktop */}
-            <div className="hidden lg:flex items-center justify-between px-3 py-2 bg-emerald-900/5 rounded-xl border border-emerald-900/10 mb-3 text-xs text-emerald-950 font-medium">
+            <div className="hidden lg:flex items-center justify-between px-3.5 py-2.5 bg-white rounded-xl border border-slate-200 mb-3 text-xs text-slate-700 shadow-2xs font-medium">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>
+                <span className="w-2 h-2 rounded-full bg-[#15803D] animate-pulse"></span>
+                <span className="font-semibold text-slate-900">
                   Live Preview A4{' '}
-                  {documentType === 'all'
-                    ? '(3 Halaman: BA, ICE, BQ)'
-                    : documentType === 'berita-acara'
-                    ? '(Berita Acara)'
-                    : '(Bill of Quantity)'}
+                  <span className="font-normal text-slate-500">
+                    {documentType === 'all'
+                      ? '(3 Halaman: BA, ICE, BQ)'
+                      : documentType === 'berita-acara'
+                      ? '(Berita Acara)'
+                      : '(Bill of Quantity)'}
+                  </span>
                 </span>
               </div>
-              <div className="text-gray-600 font-mono text-[11px]">
+              <div className="text-slate-500 font-mono text-[11px] bg-slate-50 px-2 py-0.5 rounded border border-slate-200">
                 {documentType === 'all'
                   ? `${generateBeritaAcaraFilename(beritaData).replace(/\.pdf$/i, '')} - BA ICE BQ.pdf`
                   : documentType === 'berita-acara'
@@ -517,7 +520,7 @@ export default function HomePage() {
             </div>
 
             {/* Document sheet wrapper */}
-            <div className="bg-gray-200/50 rounded-2xl p-2 sm:p-4 border border-gray-200 min-h-[calc(100vh-160px)] flex justify-center items-start overflow-hidden">
+            <div className="bg-[#F1F5F9] rounded-2xl p-3 sm:p-5 border border-slate-200 min-h-[calc(100vh-160px)] flex justify-center items-start overflow-hidden">
               <DocumentPreviewWrapper zoom={zoom}>
                 {documentType === 'berita-acara' && (
                   <BeritaAcaraDoc data={beritaData} />
@@ -528,19 +531,19 @@ export default function HomePage() {
                 {documentType === 'all' && (
                   <div className="space-y-6">
                     <div>
-                      <div className="text-center font-bold text-xs text-gray-500 mb-2 uppercase tracking-wider">
+                      <div className="text-center font-bold text-xs text-slate-500 mb-2 uppercase tracking-wider">
                         Halaman 1 — Berita Acara
                       </div>
                       <BeritaAcaraDoc data={beritaData} />
                     </div>
                     <div>
-                      <div className="text-center font-bold text-xs text-gray-500 mb-2 uppercase tracking-wider">
+                      <div className="text-center font-bold text-xs text-slate-500 mb-2 uppercase tracking-wider">
                         Halaman 2 — Internal Cost Estimation (ICE)
                       </div>
                       <BQDoc data={bqData} viewMode="ice" />
                     </div>
                     <div>
-                      <div className="text-center font-bold text-xs text-gray-500 mb-2 uppercase tracking-wider">
+                      <div className="text-center font-bold text-xs text-slate-500 mb-2 uppercase tracking-wider">
                         Halaman 3 — Bill of Quantity (BQ)
                       </div>
                       <BQDoc data={bqData} viewMode="bq" />

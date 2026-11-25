@@ -161,15 +161,15 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
   };
 
   return (
-    <div className="space-y-5 text-gray-800">
+    <div className="space-y-5 text-slate-800">
       {/* Quick Action Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 bg-white p-3 rounded-xl border border-gray-200 shadow-xs">
+      <div className="flex flex-wrap items-center justify-between gap-2 bg-white p-3.5 rounded-xl border border-slate-200 shadow-xs">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#14532D] bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200/80">
             Berita Acara
           </span>
-          <span className="text-xs text-gray-700 hidden sm:inline">
-            Isi formulir untuk pembaruan real-time
+          <span className="text-xs text-slate-500 hidden sm:inline font-medium">
+            Isi formulir untuk pembaruan dokumen real-time
           </span>
         </div>
         <div className="flex items-center gap-2">
@@ -177,25 +177,25 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
             <button
               type="button"
               onClick={onUploadPdf}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-emerald-900 bg-white hover:bg-emerald-50 rounded-lg transition-colors border border-emerald-300 shadow-2xs"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-white hover:bg-slate-50 rounded-lg transition-colors border border-slate-300 shadow-2xs"
               title="Upload file PDF Berita Acara untuk diedit kembali"
             >
-              <Upload className="w-3.5 h-3.5 text-emerald-700" />
+              <Upload className="w-3.5 h-3.5 text-slate-600" />
               <span>Edit dari PDF</span>
             </button>
           )}
           <button
             type="button"
             onClick={onLoadSample}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-emerald-900 bg-emerald-50 hover:bg-emerald-100 rounded-lg transition-colors border border-emerald-200"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-white hover:bg-slate-50 rounded-lg transition-colors border border-slate-300 shadow-2xs"
           >
-            <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
+            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
             Contoh Data
           </button>
           <button
             type="button"
             onClick={onReset}
-            className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors border border-gray-200"
+            className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-slate-500 hover:text-red-600 hover:bg-red-50/60 rounded-lg transition-colors border border-transparent hover:border-red-200"
             title="Bersihkan Form"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -205,34 +205,34 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
       </div>
 
       {/* 1. Informasi Dasar & Nomor Dokumen */}
-      <section className="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 shadow-xs space-y-4">
-        <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2 border-b border-gray-100 pb-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
+      <section className="bg-white p-5 sm:p-6 rounded-xl border border-slate-200 shadow-xs space-y-5">
+        <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-3">
+          <span className="w-2 h-2 rounded-full bg-[#15803D]"></span>
           Informasi Dasar
         </h3>
 
         {/* Nomor & Dept Controls */}
-        <div className="p-3.5 bg-emerald-50/50 border border-emerald-100 rounded-xl space-y-3">
+        <div className="p-4 bg-slate-50/80 border border-slate-200 rounded-xl space-y-3.5">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <span className="text-xs font-bold text-emerald-950 flex items-center gap-1.5">
+            <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
               <span>Konfigurasi Nomor Berita Acara</span>
             </span>
             <button
               type="button"
               onClick={() => setIsManualNomor(!isManualNomor)}
-              className="text-[11px] font-medium text-emerald-700 hover:text-emerald-900 hover:underline"
+              className="text-[11px] font-semibold text-[#15803D] hover:text-[#14532D] hover:underline"
             >
               {isManualNomor ? '← Gunakan Mode Otomatis' : 'Mode Edit String Manual'}
             </button>
           </div>
 
           {!isManualNomor ? (
-            <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-12 gap-3.5">
               {/* Nomor Urut */}
               <div className="sm:col-span-5">
                 <label
                   htmlFor="nomorUrutInput"
-                  className="block text-xs font-bold text-gray-800 mb-1"
+                  className="block text-xs font-semibold text-slate-700 mb-1.5"
                 >
                   Nomor Urut <span className="text-red-500">*</span>
                 </label>
@@ -242,21 +242,21 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
                   value={currentNomorUrut}
                   onChange={(e) => handleNomorUrutChange(e.target.value)}
                   placeholder="Contoh: 278 atau 067"
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono font-bold"
+                  className="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-all font-mono font-bold"
                 />
               </div>
 
               {/* Pilihan Dept */}
               <div className="sm:col-span-7">
-                <div className="flex items-center justify-between mb-1">
-                  <label htmlFor="deptSelect" className="text-xs font-bold text-gray-800">
+                <div className="flex items-center justify-between mb-1.5">
+                  <label htmlFor="deptSelect" className="text-xs font-semibold text-slate-700">
                     Dept (Departemen) <span className="text-red-500">*</span>
                   </label>
                   {!isAddingDept && (
                     <button
                       type="button"
                       onClick={() => setIsAddingDept(true)}
-                      className="text-[11px] font-semibold text-emerald-700 hover:text-emerald-800 flex items-center gap-0.5"
+                      className="text-[11px] font-semibold text-[#15803D] hover:text-[#14532D] flex items-center gap-0.5"
                     >
                       <Plus className="w-3 h-3" />
                       Tambah Dept
@@ -269,7 +269,7 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
                     id="deptSelect"
                     value={currentDept}
                     onChange={(e) => handleDeptSelect(e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-semibold text-emerald-950"
+                    className="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-all font-medium"
                   >
                     {departments.map((dept) => (
                       <option key={dept} value={dept}>
@@ -286,11 +286,11 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
                       value={newDeptInput}
                       onChange={(e) => setNewDeptInput(e.target.value)}
                       placeholder="Kode Dept (misal: SEC/TR)"
-                      className="flex-1 px-2.5 py-1.5 text-xs border border-emerald-400 rounded-lg bg-white uppercase font-bold focus:ring-2 focus:ring-emerald-500"
+                      className="flex-1 px-3 py-2 text-xs border border-emerald-400 rounded-lg bg-white uppercase font-bold focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
                     />
                     <button
                       type="submit"
-                      className="px-2.5 py-1.5 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 text-xs font-semibold flex items-center gap-1"
+                      className="px-3 py-2 bg-[#14532D] text-white rounded-lg hover:bg-[#0f3d21] text-xs font-semibold flex items-center gap-1 shadow-xs"
                     >
                       <Check className="w-3 h-3" />
                       Simpan
@@ -301,7 +301,7 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
                         setIsAddingDept(false);
                         setNewDeptInput('');
                       }}
-                      className="px-2 py-1.5 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 text-xs font-medium"
+                      className="px-3 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 text-xs font-medium"
                     >
                       Batal
                     </button>
@@ -311,7 +311,7 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
             </div>
           ) : (
             <div>
-              <label htmlFor="nomorManual" className="block text-xs font-bold text-gray-800 mb-1">
+              <label htmlFor="nomorManual" className="block text-xs font-semibold text-slate-700 mb-1.5">
                 Ketik Nomor Lengkap Berita Acara Secara Bebas
               </label>
               <input
@@ -320,15 +320,15 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
                 value={data.nomor}
                 onChange={(e) => handleChange('nomor', e.target.value)}
                 placeholder="Contoh: 278/BAK-TAR/ENG/X/2026"
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono"
+                className="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-all font-mono"
               />
             </div>
           )}
 
           {/* Real-time Number Preview Banner */}
-          <div className="pt-2 border-t border-emerald-100 flex items-center justify-between text-xs">
-            <span className="text-gray-700 font-medium">Hasil Nomor di Dokumen:</span>
-            <span className="font-mono font-bold text-emerald-950 bg-white px-2 py-1 rounded border border-emerald-200">
+          <div className="pt-2.5 border-t border-slate-200/80 flex items-center justify-between text-xs">
+            <span className="text-slate-600 font-medium">Hasil Nomor di Dokumen:</span>
+            <span className="font-mono font-bold text-[#14532D] bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-2xs">
               No.&nbsp;{data.nomor || '___/BAK-TAR/___/___/____'}
             </span>
           </div>
@@ -338,7 +338,7 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Tanggal */}
           <div>
-            <label htmlFor="tanggal" className="block text-xs font-bold text-gray-800 mb-1.5">
+            <label htmlFor="tanggal" className="block text-xs font-semibold text-slate-700 mb-1.5">
               Tanggal Kejadian <span className="text-red-500">*</span>
             </label>
             <input
@@ -346,13 +346,13 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
               type="date"
               value={data.tanggal}
               onChange={(e) => handleTanggalChange(e.target.value)}
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
+              className="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-all"
             />
           </div>
 
           {/* Waktu */}
           <div>
-            <label htmlFor="waktu" className="block text-xs font-bold text-gray-800 mb-1.5">
+            <label htmlFor="waktu" className="block text-xs font-semibold text-slate-700 mb-1.5">
               Waktu Kejadian <span className="text-red-500">*</span>
             </label>
             <input
@@ -360,13 +360,13 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
               type="time"
               value={data.waktu}
               onChange={(e) => handleChange('waktu', e.target.value)}
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
+              className="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-all"
             />
           </div>
 
           {/* Lokasi */}
           <div className="sm:col-span-2">
-            <label htmlFor="lokasi" className="block text-xs font-bold text-gray-800 mb-1.5">
+            <label htmlFor="lokasi" className="block text-xs font-semibold text-slate-700 mb-1.5">
               Lokasi Kejadian <span className="text-red-500">*</span>
             </label>
             <input
@@ -375,21 +375,21 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
               value={data.lokasi}
               onChange={(e) => handleChange('lokasi', e.target.value)}
               placeholder="Contoh: Lobby Utama Club House / STC-18O"
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
+              className="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-all"
             />
           </div>
         </div>
       </section>
 
       {/* 2. Deskripsi & Uraian Kejadian */}
-      <section className="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 shadow-xs space-y-4">
-        <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2 border-b border-gray-100 pb-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
+      <section className="bg-white p-5 sm:p-6 rounded-xl border border-slate-200 shadow-xs space-y-5">
+        <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-3">
+          <span className="w-2 h-2 rounded-full bg-[#15803D]"></span>
           Deskripsi &amp; Kronologi
         </h3>
 
         <div>
-          <label htmlFor="deskripsi" className="block text-xs font-bold text-gray-800 mb-1.5">
+          <label htmlFor="deskripsi" className="block text-xs font-semibold text-slate-700 mb-1.5">
             Deskripsi / Uraian Kejadian <span className="text-red-500">*</span>
           </label>
           <input
@@ -398,12 +398,12 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
             value={data.deskripsi}
             onChange={(e) => handleChange('deskripsi', e.target.value)}
             placeholder="Contoh: Tagihan Listrik Melonjak / Kebocoran Pipa Chiller"
-            className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
+            className="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-all"
           />
         </div>
 
         <div>
-          <label htmlFor="analisa" className="block text-xs font-bold text-gray-800 mb-1.5">
+          <label htmlFor="analisa" className="block text-xs font-semibold text-slate-700 mb-1.5">
             Analisa Masalah / Kronologis Kejadian <span className="text-red-500">*</span>
           </label>
           <textarea
@@ -412,12 +412,12 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
             value={data.analisa}
             onChange={(e) => handleChange('analisa', e.target.value)}
             placeholder="Jelaskan kronologi kejadian dan hasil investigasi penyebab masalah secara rinci..."
-            className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all leading-relaxed"
+            className="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-all leading-relaxed"
           />
         </div>
 
         <div>
-          <label htmlFor="solusi" className="block text-xs font-bold text-gray-800 mb-1.5">
+          <label htmlFor="solusi" className="block text-xs font-semibold text-slate-700 mb-1.5">
             Tindakan Pencegahan &amp; Solusi Perbaikan <span className="text-red-500">*</span>
           </label>
           <textarea
@@ -426,19 +426,19 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
             value={data.solusi}
             onChange={(e) => handleChange('solusi', e.target.value)}
             placeholder="Jelaskan tindakan yang telah atau akan diambil untuk perbaikan dan pencegahan terulang..."
-            className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all leading-relaxed"
+            className="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-all leading-relaxed"
           />
         </div>
       </section>
 
       {/* 3. Lampiran Foto */}
-      <section className="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 shadow-xs space-y-4">
-        <div className="flex items-center justify-between border-b border-gray-100 pb-2">
-          <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
+      <section className="bg-white p-5 sm:p-6 rounded-xl border border-slate-200 shadow-xs space-y-5">
+        <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#15803D]"></span>
             Lampiran Foto ({data.photos?.length || 0})
           </h3>
-          <span className="text-xs text-gray-700">Format gambar (JPG, PNG)</span>
+          <span className="text-xs text-slate-500 font-medium">Format gambar (JPG, PNG)</span>
         </div>
 
         {/* Upload Button & Dropzone */}
@@ -454,13 +454,13 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
           />
           <label
             htmlFor="photo-upload-input"
-            className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-xl hover:border-emerald-500 hover:bg-emerald-50/30 cursor-pointer transition-all"
+            className="flex flex-col items-center justify-center p-5 border-2 border-dashed border-slate-200 rounded-xl hover:border-emerald-500 hover:bg-emerald-50/20 cursor-pointer transition-all"
           >
-            <ImagePlus className="w-8 h-8 text-emerald-600 mb-2" />
-            <span className="text-xs font-semibold text-gray-800">
+            <ImagePlus className="w-8 h-8 text-[#15803D] mb-2" />
+            <span className="text-xs font-semibold text-slate-800">
               Pilih foto atau ambil dari kamera
             </span>
-            <span className="text-[11px] text-gray-700 mt-0.5">
+            <span className="text-[11px] text-slate-500 mt-0.5">
               Bisa upload lebih dari 1 foto sekaligus
             </span>
           </label>
@@ -472,7 +472,7 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
             {data.photos.map((photo, idx) => (
               <div
                 key={idx}
-                className="group relative rounded-lg border border-gray-200 overflow-hidden bg-gray-50 aspect-video flex items-center justify-center"
+                className="group relative rounded-lg border border-slate-200 overflow-hidden bg-slate-50 aspect-video flex items-center justify-center shadow-2xs"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -483,12 +483,12 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
                 <button
                   type="button"
                   onClick={() => handleRemovePhoto(idx)}
-                  className="absolute top-1 right-1 bg-red-600 hover:bg-red-700 text-white rounded-full p-1 opacity-90 shadow-sm transition-opacity"
+                  className="absolute top-1.5 right-1.5 bg-red-600 hover:bg-red-700 text-white rounded-full p-1 opacity-90 shadow-sm transition-opacity"
                   title="Hapus foto ini"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
-                <div className="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[10px] text-center py-0.5">
+                <div className="absolute bottom-0 inset-x-0 bg-slate-900/70 text-white text-[10px] text-center py-0.5 font-medium">
                   Foto {idx + 1}
                 </div>
               </div>
@@ -498,19 +498,19 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
       </section>
 
       {/* 4. Approval / Tanda Tangan */}
-      <section className="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 shadow-xs space-y-4">
-        <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2 border-b border-gray-100 pb-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
+      <section className="bg-white p-5 sm:p-6 rounded-xl border border-slate-200 shadow-xs space-y-5">
+        <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-3">
+          <span className="w-2 h-2 rounded-full bg-[#15803D]"></span>
           Penandatangan / Approval
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* 1. Pelapor */}
-          <div className="space-y-2 p-3 bg-gray-50/70 border border-gray-200 rounded-lg">
+          <div className="space-y-3 p-4 bg-slate-50/70 border border-slate-200 rounded-xl">
             <div>
               <label
                 htmlFor="staffEngineering"
-                className="block text-xs font-bold text-gray-800 mb-1"
+                className="block text-xs font-semibold text-slate-700 mb-1.5"
               >
                 Dilaporkan oleh (Nama) <span className="text-red-500">*</span>
               </label>
@@ -520,13 +520,13 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
                 value={data.staffEngineering}
                 onChange={(e) => handleChange('staffEngineering', e.target.value)}
                 placeholder="Nama Pelapor"
-                className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-medium"
+                className="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-all font-medium"
               />
             </div>
             <div>
               <label
                 htmlFor="jabatanStaff"
-                className="block text-[11px] font-semibold text-gray-700 mb-1"
+                className="block text-[11px] font-semibold text-slate-600 mb-1"
               >
                 Jabatan di Bawah Nama
               </label>
@@ -536,15 +536,15 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
                 value={data.jabatanStaff ?? `Staff ${currentDept}`}
                 onChange={(e) => handleChange('jabatanStaff', e.target.value)}
                 placeholder="Contoh: Engineering Staff"
-                className="w-full px-3 py-1.5 text-xs border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all text-gray-700"
+                className="w-full px-3 py-1.5 text-xs border border-slate-200 rounded-lg bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-all"
               />
             </div>
           </div>
 
           {/* 2. Diperiksa oleh */}
-          <div className="space-y-2 p-3 bg-gray-50/70 border border-gray-200 rounded-lg">
+          <div className="space-y-3 p-4 bg-slate-50/70 border border-slate-200 rounded-xl">
             <div>
-              <label htmlFor="supervisor" className="block text-xs font-bold text-gray-800 mb-1">
+              <label htmlFor="supervisor" className="block text-xs font-semibold text-slate-700 mb-1.5">
                 Diperiksa oleh (Nama) <span className="text-red-500">*</span>
               </label>
               <input
@@ -553,13 +553,13 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
                 value={data.supervisor}
                 onChange={(e) => handleChange('supervisor', e.target.value)}
                 placeholder="Nama Supervisor"
-                className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-medium"
+                className="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-all font-medium"
               />
             </div>
             <div>
               <label
                 htmlFor="jabatanSupervisor"
-                className="block text-[11px] font-semibold text-gray-700 mb-1"
+                className="block text-[11px] font-semibold text-slate-600 mb-1"
               >
                 Jabatan di Bawah Nama
               </label>
@@ -569,15 +569,15 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
                 value={data.jabatanSupervisor ?? 'Supervisor'}
                 onChange={(e) => handleChange('jabatanSupervisor', e.target.value)}
                 placeholder="Contoh: Supervisor"
-                className="w-full px-3 py-1.5 text-xs border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all text-gray-700"
+                className="w-full px-3 py-1.5 text-xs border border-slate-200 rounded-lg bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-all"
               />
             </div>
           </div>
 
           {/* 3. Diketahui oleh: Asst Manager */}
-          <div className="space-y-2 p-3 bg-gray-50/70 border border-gray-200 rounded-lg">
+          <div className="space-y-3 p-4 bg-slate-50/70 border border-slate-200 rounded-xl">
             <div>
-              <label htmlFor="asstManager" className="block text-xs font-bold text-gray-800 mb-1">
+              <label htmlFor="asstManager" className="block text-xs font-semibold text-slate-700 mb-1.5">
                 Diketahui oleh 1 (Nama) <span className="text-red-500">*</span>
               </label>
               <input
@@ -586,13 +586,13 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
                 value={data.asstManager}
                 onChange={(e) => handleChange('asstManager', e.target.value)}
                 placeholder="Nama Asst. Manager"
-                className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-medium"
+                className="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-all font-medium"
               />
             </div>
             <div>
               <label
                 htmlFor="jabatanAsstManager"
-                className="block text-[11px] font-semibold text-gray-700 mb-1"
+                className="block text-[11px] font-semibold text-slate-600 mb-1"
               >
                 Jabatan di Bawah Nama
               </label>
@@ -602,17 +602,17 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
                 value={data.jabatanAsstManager ?? 'Engineering Asst. Manager'}
                 onChange={(e) => handleChange('jabatanAsstManager', e.target.value)}
                 placeholder="Contoh: Engineering Asst. Manager"
-                className="w-full px-3 py-1.5 text-xs border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all text-gray-700"
+                className="w-full px-3 py-1.5 text-xs border border-slate-200 rounded-lg bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-all"
               />
             </div>
           </div>
 
           {/* 4. Diketahui oleh: Property Manager */}
-          <div className="space-y-2 p-3 bg-gray-50/70 border border-gray-200 rounded-lg">
+          <div className="space-y-3 p-4 bg-slate-50/70 border border-slate-200 rounded-xl">
             <div>
               <label
                 htmlFor="propertyManager"
-                className="block text-xs font-bold text-gray-800 mb-1"
+                className="block text-xs font-semibold text-slate-700 mb-1.5"
               >
                 Diketahui oleh 2 (Nama) <span className="text-red-500">*</span>
               </label>
@@ -622,13 +622,13 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
                 value={data.propertyManager}
                 onChange={(e) => handleChange('propertyManager', e.target.value)}
                 placeholder="Nama Property Manager"
-                className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-medium"
+                className="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-all font-medium"
               />
             </div>
             <div>
               <label
                 htmlFor="jabatanPropertyManager"
-                className="block text-[11px] font-semibold text-gray-700 mb-1"
+                className="block text-[11px] font-semibold text-slate-600 mb-1"
               >
                 Jabatan di Bawah Nama
               </label>
@@ -638,7 +638,7 @@ export const BeritaAcaraForm: React.FC<BeritaAcaraFormProps> = ({
                 value={data.jabatanPropertyManager ?? 'Property Manager'}
                 onChange={(e) => handleChange('jabatanPropertyManager', e.target.value)}
                 placeholder="Contoh: Property Manager"
-                className="w-full px-3 py-1.5 text-xs border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all text-gray-700"
+                className="w-full px-3 py-1.5 text-xs border border-slate-200 rounded-lg bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-all"
               />
             </div>
           </div>
